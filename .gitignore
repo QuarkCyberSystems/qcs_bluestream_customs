@@ -1,0 +1,7 @@
+.DS_Store
+*.pyc
+*.egg-info
+*.swp
+tags
+qcs_bluestream_customs/docs/current
+node_modules/

@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include qcs_bluestream_customs *.css
+recursive-include qcs_bluestream_customs *.csv
+recursive-include qcs_bluestream_customs *.html
+recursive-include qcs_bluestream_customs *.ico
+recursive-include qcs_bluestream_customs *.js
+recursive-include qcs_bluestream_customs *.json
+recursive-include qcs_bluestream_customs *.md
+recursive-include qcs_bluestream_customs *.png
+recursive-include qcs_bluestream_customs *.py
+recursive-include qcs_bluestream_customs *.svg
+recursive-include qcs_bluestream_customs *.txt
+recursive-exclude qcs_bluestream_customs *.pyc
