@@ -32,6 +32,32 @@ frappe.query_reports["ECD Based on Customer"] = {
 			"default": "Lost",
 			"reqd": 1
 		},
-
+		{
+			"fieldname":"quotation_to",
+			"label": __("Quotation To"),
+			"fieldtype": "Select",
+			"options": ["", "Customer", "Lead"]
+		},
+		{
+			"fieldname":"customer",
+			"label": __("Customer"),
+			"fieldtype": "Link",
+			"options": "Customer",
+			"depends_on": "eval:doc.quotation_to=='Customer'",
+		},
+		{
+			"fieldname":"lead",
+			"label": __("Lead"),
+			"fieldtype": "Link",
+			"options": "Lead",
+			"depends_on": "eval:doc.quotation_to=='Lead'",
+		},
+		{
+			"fieldname":"employee",
+			"label": __("Sales Person"),
+			"fieldtype": "Link",
+			"options": "Employee"
+		},
+		
 	]
 };

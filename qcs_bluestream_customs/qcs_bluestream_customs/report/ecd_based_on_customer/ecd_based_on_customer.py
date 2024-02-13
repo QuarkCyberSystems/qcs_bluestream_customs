@@ -27,14 +27,26 @@ def get_columns(filters):
 			"width": 200,
 		}
 	]
+ 
+	query_filters = []
+	if filters.get("employee"):
+		query_filters.append(["employee", "=", filters.get("employee")])
+	if filters.get("quotation_to") == "Customer":
+		if filters.get("customer"):
+			query_filters.append(["party_name", "=", filters.get("customer")])
+	if filters.get("quotation_to") == "Lead":
+		if filters.get("lead"):
+			query_filters.append(["party_name", "=", filters.get("lead")])
+	if filters.get("company"):
+		query_filters.append(["company", "=", filters.get("company")])
+	query_filters.append(["transaction_date", ">=", filters.get("from_date")])
+	query_filters.append(["transaction_date", "<=", filters.get("to_date")])
+	query_filters.append(["quotation_status", "=", filters.get("status")])
+	query_filters.append(["docstatus", "=", 1])
 	
-	from_date = filters.get("from_date")
-	to_date = filters.get("to_date")
-	status = filters.get("status")
-	company = filters.get("company")
  
 	date = []
-	quo_doc = frappe.get_all("Quotation", filters={"transaction_date":["between", [from_date, to_date]], "company": company, "quotation_status": status, "docstatus": 1})
+	quo_doc = frappe.get_all("Quotation", filters=query_filters)
 	for i in quo_doc:
 		doc = frappe.get_doc("Quotation", i)
 		date.append(doc.expected_closure_date)
@@ -60,14 +72,27 @@ def get_columns(filters):
  
 def get_data(filters):
 	data = []
-	
-	from_date = filters.get("from_date")
-	to_date = filters.get("to_date")
-	status = filters.get("status")
-	company = filters.get("company")
  
+ 
+	query_filters = []
+	if filters.get("employee"):
+		query_filters.append(["employee", "=", filters.get("employee")])
+	if filters.get("quotation_to") == "Customer":
+		if filters.get("customer"):
+			query_filters.append(["party_name", "=", filters.get("customer")])
+	if filters.get("quotation_to") == "Lead":
+		if filters.get("lead"):
+			query_filters.append(["party_name", "=", filters.get("lead")])
+	if filters.get("company"):
+		query_filters.append(["company", "=", filters.get("company")])
+	query_filters.append(["transaction_date", ">=", filters.get("from_date")])
+	query_filters.append(["transaction_date", "<=", filters.get("to_date")])
+	query_filters.append(["quotation_status", "=", filters.get("status")])
+	query_filters.append(["docstatus", "=", 1])
+	
+
 	customer = []
-	quo_doc = frappe.get_all("Quotation", filters={"transaction_date":["between", [from_date, to_date]], "company": company, "quotation_status": status, "docstatus": 1})
+	quo_doc = frappe.get_all("Quotation", filters=query_filters)
 	
 	for i in quo_doc:
 		doc = frappe.get_doc("Quotation", i)
@@ -78,7 +103,19 @@ def get_data(filters):
 	for cus in with_out_dub_cus:
 		row = {"customer_name": cus}
 		total_mo = []
-		quo_doc_per_customer = frappe.get_all("Quotation", filters={"transaction_date":["between", [from_date, to_date]], "company": company, "quotation_status": status, "customer_name": cus, "docstatus": 1}, fields=["name", "grand_total", "expected_closure_date"])
+  
+		query_filters1 = []
+		if filters.get("employee"):
+			query_filters1.append(["employee", "=", filters.get("employee")])
+		if filters.get("company"):
+			query_filters1.append(["company", "=", filters.get("company")])
+		query_filters1.append(["customer_name", "=", cus])
+		query_filters1.append(["transaction_date", ">=", filters.get("from_date")])
+		query_filters1.append(["transaction_date", "<=", filters.get("to_date")])
+		query_filters1.append(["quotation_status", "=", filters.get("status")])
+		query_filters1.append(["docstatus", "=", 1])
+  
+		quo_doc_per_customer = frappe.get_all("Quotation", filters=query_filters1, fields=["name", "grand_total", "expected_closure_date"])
   
 		grand_total_per_date = {}
 		
