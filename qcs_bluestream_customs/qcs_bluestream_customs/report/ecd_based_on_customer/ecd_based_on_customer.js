@@ -28,9 +28,7 @@ frappe.query_reports["ECD Based on Customer"] = {
 			"fieldname":"status",
 			"label": __("Status"),
 			"fieldtype": "Select",
-			"options": ["Quotation Pending", "Under Negotiation", "PO Confirmed", "Set as lost", "On track", "Delayed", "Prolonged Delay", "Order Closed", "Lost", "Cancelled"],
-			"default": "Lost",
-			"reqd": 1
+			"options": ["", "Quotation Pending", "Under Negotiation", "PO Confirmed", "Set as lost", "On track", "Delayed", "Prolonged Delay", "Order Closed", "Lost", "Cancelled"],
 		},
 		{
 			"fieldname":"quotation_to",
@@ -59,5 +57,12 @@ frappe.query_reports["ECD Based on Customer"] = {
 			"options": "Employee"
 		},
 		
-	]
+	],
+	"formatter": function(value, row, column, data, default_formatter) {
+		value = default_formatter(value, row, column, data);
+		if (data && (data.status)) {
+			value = `<span style="font-weight: bold;">${value}</span>`;
+		}
+		return value;
+	},
 };
