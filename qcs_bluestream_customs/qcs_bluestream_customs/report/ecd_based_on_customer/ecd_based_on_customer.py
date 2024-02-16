@@ -56,12 +56,24 @@ def get_columns(filters):
 	quo_doc = frappe.get_all("Quotation", filters=query_filters)
 	for i in quo_doc:
 		doc = frappe.get_doc("Quotation", i)
-		date.append(doc.expected_closure_date)
+		ecd = doc.expected_closure_date
+		date.append(ecd.strftime('%b %Y'))
 		
-	without_dup_list = sorted(list(set(date)))
+	# without_dup_list = sorted(list(set(date)))
+	date = [datetime.strptime(d, '%b %Y') for d in date]
 
+	without_dup_set = set()
+	without_dup_list = []
+	for d in date:
+		date_str = d.strftime('%b %Y')
+		if date_str not in without_dup_set:
+			without_dup_set.add(date_str)
+			without_dup_list.append(date_str)
+
+	without_dup_list.sort(key=lambda x: datetime.strptime(x, '%b %Y'))
+ 
 	columns.extend([{
-		"label": str(date_item.strftime('%d-%m-%Y')),
+		"label": str(date_item),
 		"fieldname": str(date_item),
 		"fieldtype": "Currency",
 		"width": 150,
@@ -137,14 +149,14 @@ def get_data(filters):
 				grand_total = doc.grand_total
 				
 				if date not in grand_total_per_date:
-					grand_total_per_date[date] = grand_total
+					grand_total_per_date[date.strftime('%b %Y')] = grand_total
 				else:
-					grand_total_per_date[date] += grand_total
-    #  overall
+					grand_total_per_date[date.strftime('%b %Y')] += grand_total
+	#  overall
 				if date not in over_all_amount:
-					over_all_amount[date] = grand_total
+					over_all_amount[date.strftime('%b %Y')] = grand_total
 				else:
-					over_all_amount[date] += grand_total
+					over_all_amount[date.strftime('%b %Y')] += grand_total
 	#####		
 			for date, total in grand_total_per_date.items():
 				row[str(date)] = total
@@ -156,13 +168,13 @@ def get_data(filters):
 		for date, total in over_all_amount.items():
 			status_row[str(date)] = total
 			overall_total_mo.append(total)
-    
+	
 		status_row["total_amount"] = sum(overall_total_mo)
 		data.append(status_row)
   
 	else:
-     
-		set_sastus = ["Quotation Pending", "Under Negotiation", "PO Confirmed", "Set as lost", "On track", "Delayed", "Prolonged Delay", "Order Closed", "Lost", "Cancelled"]
+	 
+		set_sastus = ["Quotation Pending", "On track", "Delayed", "Prolonged Delay"]
 		for s_status in set_sastus:
 			query_filters = []
 			if filters.get("employee"):
@@ -218,14 +230,14 @@ def get_data(filters):
 					grand_total = doc.grand_total
 					
 					if date not in grand_total_per_date:
-						grand_total_per_date[date] = grand_total
+						grand_total_per_date[date.strftime('%b %Y')] = grand_total
 					else:
-						grand_total_per_date[date] += grand_total
-        #  overall
+						grand_total_per_date[date.strftime('%b %Y')] += grand_total
+		#  overall
 					if date not in over_all_amount:
-						over_all_amount[date] = grand_total
+						over_all_amount[date.strftime('%b %Y')] = grand_total
 					else:
-						over_all_amount[date] += grand_total
+						over_all_amount[date.strftime('%b %Y')] += grand_total
 		######		
 				for date, total in grand_total_per_date.items():
 					row[str(date)] = total
@@ -233,12 +245,11 @@ def get_data(filters):
 				
 				row["total_amount"] = sum(total_mo)
 				data.append(row)
-    
+	
 			for date, total in over_all_amount.items():
 				status_row[str(date)] = total
 				overall_total_mo.append(total)
 		
 			status_row["total_amount"] = sum(overall_total_mo)
 			data.append(status_row)
-	
 	return data
