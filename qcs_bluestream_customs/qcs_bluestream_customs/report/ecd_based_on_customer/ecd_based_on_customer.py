@@ -45,8 +45,8 @@ def get_columns(filters):
 			query_filters.append(["party_name", "=", filters.get("lead")])
 	if filters.get("company"):
 		query_filters.append(["company", "=", filters.get("company")])
-	query_filters.append(["transaction_date", ">=", filters.get("from_date")])
-	query_filters.append(["transaction_date", "<=", filters.get("to_date")])
+	query_filters.append(["expected_closure_date", ">=", filters.get("from_date")])
+	query_filters.append(["expected_closure_date", "<=", filters.get("to_date")])
 	if filters.get("status"):
 		query_filters.append(["quotation_status", "=", filters.get("status")])
 	query_filters.append(["docstatus", "=", 1])
@@ -91,6 +91,7 @@ def get_columns(filters):
  
 def get_data(filters):
 	data = []
+	final_data = []
  
 	if(filters.get("status")):
 		query_filters = []
@@ -104,8 +105,8 @@ def get_data(filters):
 				query_filters.append(["party_name", "=", filters.get("lead")])
 		if filters.get("company"):
 			query_filters.append(["company", "=", filters.get("company")])
-		query_filters.append(["transaction_date", ">=", filters.get("from_date")])
-		query_filters.append(["transaction_date", "<=", filters.get("to_date")])
+		query_filters.append(["expected_closure_date", ">=", filters.get("from_date")])
+		query_filters.append(["expected_closure_date", "<=", filters.get("to_date")])
 		if filters.get("status"):
 			query_filters.append(["quotation_status", "=", filters.get("status")])
 		query_filters.append(["docstatus", "=", 1])
@@ -122,9 +123,14 @@ def get_data(filters):
 		status_row = {"status": filters.get("status")}
 		over_all_amount = {}
 		overall_total_mo = []
+		status_values = []
 		
 		for cus in with_out_dub_cus:
-			row = {"customer_name": cus}
+			# row = {"customer_name": cus}
+			customer_link = f'''
+				<a href= "/app/quotation?company={filters.get("company")}&quotation_status={filters.get("status")}&docstatus=1&customer_name={cus}&expected_closure_date=%5B%22Between%22%2C%5B%22{filters.get("from_date")}%22%2C%22{filters.get("to_date")}%22%5D%5D">{cus}</a>
+				'''
+			row = {"customer_name": customer_link}
 			total_mo = []
 	
 			query_filters1 = []
@@ -133,8 +139,8 @@ def get_data(filters):
 			if filters.get("company"):
 				query_filters1.append(["company", "=", filters.get("company")])
 			query_filters1.append(["customer_name", "=", cus])
-			query_filters1.append(["transaction_date", ">=", filters.get("from_date")])
-			query_filters1.append(["transaction_date", "<=", filters.get("to_date")])
+			query_filters1.append(["expected_closure_date", ">=", filters.get("from_date")])
+			query_filters1.append(["expected_closure_date", "<=", filters.get("to_date")])
 			if filters.get("status"):
 				query_filters.append(["quotation_status", "=", filters.get("status")])
 			query_filters1.append(["docstatus", "=", 1])
@@ -163,14 +169,19 @@ def get_data(filters):
 				total_mo.append(total)
 			
 			row["total_amount"] = sum(total_mo)
-			data.append(row)
+			row["indent"] = 1
+			status_values.append(row)
    
 		for date, total in over_all_amount.items():
 			status_row[str(date)] = total
 			overall_total_mo.append(total)
 	
 		status_row["total_amount"] = sum(overall_total_mo)
+		status_row["indent"] = 0
 		data.append(status_row)
+  
+		for vlues in status_values:
+			data.append(vlues)
   
 	else:
 	 
@@ -187,8 +198,8 @@ def get_data(filters):
 					query_filters.append(["party_name", "=", filters.get("lead")])
 			if filters.get("company"):
 				query_filters.append(["company", "=", filters.get("company")])
-			query_filters.append(["transaction_date", ">=", filters.get("from_date")])
-			query_filters.append(["transaction_date", "<=", filters.get("to_date")])
+			query_filters.append(["expected_closure_date", ">=", filters.get("from_date")])
+			query_filters.append(["expected_closure_date", "<=", filters.get("to_date")])
 			query_filters.append(["quotation_status", "=", s_status])
 			query_filters.append(["docstatus", "=", 1])
 			
@@ -204,9 +215,14 @@ def get_data(filters):
 			status_row = {"status": s_status}
 			over_all_amount = {}
 			overall_total_mo = []
+			status_values = []
 			
 			for cus in with_out_dub_cus:
-				row = {"customer_name": cus}
+				# row = {"customer_name": cus}
+				customer_link = f'''
+				<a href= "/app/quotation?company={filters.get("company")}&quotation_status={s_status}&docstatus=1&customer_name={cus}&expected_closure_date=%5B%22Between%22%2C%5B%22{filters.get("from_date")}%22%2C%22{filters.get("to_date")}%22%5D%5D">{cus}</a>
+				'''
+				row = {"customer_name": customer_link}
 				total_mo = []
 		
 				query_filters1 = []
@@ -215,8 +231,8 @@ def get_data(filters):
 				if filters.get("company"):
 					query_filters1.append(["company", "=", filters.get("company")])
 				query_filters1.append(["customer_name", "=", cus])
-				query_filters1.append(["transaction_date", ">=", filters.get("from_date")])
-				query_filters1.append(["transaction_date", "<=", filters.get("to_date")])
+				query_filters1.append(["expected_closure_date", ">=", filters.get("from_date")])
+				query_filters1.append(["expected_closure_date", "<=", filters.get("to_date")])
 				query_filters.append(["quotation_status", "=", s_status])
 				query_filters1.append(["docstatus", "=", 1])
 		
@@ -238,18 +254,24 @@ def get_data(filters):
 						over_all_amount[date.strftime('%b %Y')] = grand_total
 					else:
 						over_all_amount[date.strftime('%b %Y')] += grand_total
-		######		
+		######	
 				for date, total in grand_total_per_date.items():
 					row[str(date)] = total
 					total_mo.append(total)
 				
 				row["total_amount"] = sum(total_mo)
-				data.append(row)
+				row["indent"] = 1
+				status_values.append(row)
 	
 			for date, total in over_all_amount.items():
 				status_row[str(date)] = total
 				overall_total_mo.append(total)
 		
 			status_row["total_amount"] = sum(overall_total_mo)
+			status_row["indent"] = 0
 			data.append(status_row)
+   
+			for vlues in status_values:
+				data.append(vlues)
+
 	return data
