@@ -306,9 +306,6 @@ def get_data(filters):
 				status_row[str(date)] = total
 				overall_total_mo.append(total)
     
-			for date, total in over_all_amount1.items():
-				status_row1[str(date)] = total
-				overall_total_mo1.append(total)
 		
 			status_row["total_amount"] = sum(overall_total_mo)
 			status_row["indent"] = 0
@@ -320,6 +317,10 @@ def get_data(filters):
 				for quot_val in quotation_values:
 					if (vlues.get("cus") == quot_val.get("cus_name")):
 						data.append(quot_val)
+      
+		for date, total in over_all_amount1.items():
+			status_row1[str(date)] = total
+			overall_total_mo1.append(total)
       
 		status_row1["total_amount"] = sum(overall_total_mo1)
 		status_row1["indent"] = 0
