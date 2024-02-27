@@ -6,7 +6,6 @@ from frappe.utils.nestedset import get_descendants_of
 
 @frappe.whitelist()
 def create_stock_entry(pick_list):
-	frappe.errprint("bghv")
 	pick_list = frappe.get_doc(json.loads(pick_list))
 	validate_item_locations(pick_list)
 
@@ -15,8 +14,10 @@ def create_stock_entry(pick_list):
 
 	stock_entry = frappe.new_doc("Stock Entry")
 	stock_entry.pick_list = pick_list.get("name")
+	stock_entry.job_card = pick_list.get("job_card")
 	stock_entry.purpose = pick_list.get("purpose")
-	stock_entry.set_stock_entry_type()
+	stock_entry.stock_entry_type = "Material Transfer for Manufacture"
+	# stock_entry.set_stock_entry_type()
 
 	if pick_list.get("work_order"):
 		stock_entry = update_stock_entry_based_on_work_order(pick_list, stock_entry)
@@ -110,31 +111,4 @@ def update_stock_entry_items_with_no_reference(pick_list, stock_entry):
 		stock_entry.append("items", item)
 
 	return stock_entry
-
-
-@frappe.whitelist()
-def create_stock_entry(pick_list):
-	pick_list = frappe.get_doc(json.loads(pick_list))
-	validate_item_locations(pick_list)
-
-	if stock_entry_exists(pick_list.get("name")):
-		return frappe.msgprint(_("Stock Entry has been already created against this Pick List"))
-
-	stock_entry = frappe.new_doc("Stock Entry")
-	stock_entry.pick_list = pick_list.get("name")
-	stock_entry.job_card = pick_list.get("job_card")
-	stock_entry.purpose = pick_list.get("purpose")
-	stock_entry.stock_entry_type = "Material Transfer for Manufacture"
-	# stock_entry.set_stock_entry_type()
-
-	if pick_list.get("work_order"):
-		stock_entry = update_stock_entry_based_on_work_order(pick_list, stock_entry)
-	elif pick_list.get("material_request"):
-		stock_entry = update_stock_entry_based_on_material_request(pick_list, stock_entry)
-	else:
-		stock_entry = update_stock_entry_items_with_no_reference(pick_list, stock_entry)
-
-	stock_entry.set_missing_values()
-
-	return stock_entry.as_dict()
 
