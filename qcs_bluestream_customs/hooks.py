@@ -136,6 +136,8 @@ fixtures = [
             [
                 "name", "in", [
                     'Work Order-status-in_list_view',
+                    'Stock Entry-custom_sampling_work_order',
+                    'Job Card-custom_sampling_work_order'
                 ]
              ]
         ],
