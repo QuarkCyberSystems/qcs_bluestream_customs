@@ -112,3 +112,10 @@ def update_stock_entry_items_with_no_reference(pick_list, stock_entry):
 
 	return stock_entry
 
+
+
+# ################ command line ####################
+
+			# file name : pick_list.py
+			# function name : get_available_item_locations_for_other_item
+			# line :  .limit(cint(required_qty + total_picked_qty))
