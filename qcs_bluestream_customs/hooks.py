@@ -29,7 +29,8 @@ app_license = "MIT"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-doctype_js = {"Work Order" : "public/work_order.js"}
+doctype_js = {"Work Order" : "public/work_order.js",
+			"Pick List": "public/pick_list.js"}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -96,7 +97,7 @@ doctype_js = {"Work Order" : "public/work_order.js"}
 
 override_doctype_class = {
 	"Stock Entry": "qcs_bluestream_customs.override_file.stock_entry.BSStockEntry",
-    "Job Card": "qcs_bluestream_customs.override_file.job_card.BSJobCard"
+	"Job Card": "qcs_bluestream_customs.override_file.job_card.BSJobCard"
 }
 
 # Document Events
@@ -131,19 +132,19 @@ override_doctype_class = {
 # }
 
 fixtures = [
-    {
-        "dt": "Property Setter", "filters": [
-            [
-                "name", "in", [
-                    'Work Order-status-in_list_view',
-                    'Stock Entry-custom_sampling_work_order',
-                    'Job Card-custom_sampling_work_order'
-                ]
-             ]
-        ],
+	{
+		"dt": "Property Setter", "filters": [
+			[
+				"name", "in", [
+					'Work Order-status-in_list_view',
+					'Stock Entry-custom_sampling_work_order',
+					'Job Card-custom_sampling_work_order'
+				]
+			 ]
+		],
 
-    },
-    
+	},
+	
 ]
 
 
@@ -155,9 +156,10 @@ fixtures = [
 # Overriding Methods
 # ------------------------------
 #
-# override_whitelisted_methods = {
-#	"frappe.desk.doctype.event.event.get_events": "qcs_bluestream_customs.event.get_events"
-# }
+override_whitelisted_methods = {
+	# "frappe.desk.doctype.event.event.get_events": "qcs_bluestream_customs.event.get_events",
+	"erpnext.stock.doctype.pick_list.pick_list.create_stock_entry": "qcs_bluestream_customs.controller.pick_list.create_stock_entry"
+}
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
