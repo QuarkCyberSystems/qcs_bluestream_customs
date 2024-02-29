@@ -62,6 +62,7 @@ def get_columns(filters):
 	query_filters.append(["expected_closure_date", "<=", filters.get("to_date")])
 	if filters.get("status"):
 		query_filters.append(["quotation_status", "=", filters.get("status")])
+	query_filters.append(["status", "not in", ["Cancelled", "Lost"]])
 	query_filters.append(["docstatus", "=", 1])
 	
  
@@ -121,6 +122,7 @@ def get_data(filters):
 		query_filters.append(["expected_closure_date", "<=", filters.get("to_date")])
 		if filters.get("status"):
 			query_filters.append(["quotation_status", "=", filters.get("status")])
+		query_filters.append(["status", "not in", ["Cancelled", "Lost"]])
 		query_filters.append(["docstatus", "=", 1])
 		
 		customer = []
@@ -157,6 +159,7 @@ def get_data(filters):
 			query_filters1.append(["expected_closure_date", "<=", filters.get("to_date")])
 			if filters.get("status"):
 				query_filters1.append(["quotation_status", "=", filters.get("status")])
+			query_filters1.append(["status", "not in", ["Cancelled", "Lost"]])
 			query_filters1.append(["docstatus", "=", 1])
 	
 			quo_doc_per_customer = frappe.get_all("Quotation", filters=query_filters1, fields=["name", "grand_total", "expected_closure_date", "customer_name", "jih__tender"])
@@ -235,6 +238,7 @@ def get_data(filters):
 			query_filters.append(["expected_closure_date", "<=", filters.get("to_date")])
 			query_filters.append(["quotation_status", "=", s_status])
 			query_filters.append(["docstatus", "=", 1])
+			query_filters.append(["status", "not in", ["Cancelled", "Lost"]])
 			
 			customer = []
 			quo_doc = frappe.get_all("Quotation", filters=query_filters)
@@ -268,6 +272,7 @@ def get_data(filters):
 				query_filters1.append(["expected_closure_date", ">=", filters.get("from_date")])
 				query_filters1.append(["expected_closure_date", "<=", filters.get("to_date")])
 				query_filters1.append(["quotation_status", "=", s_status])
+				query_filters1.append(["status", "not in", ["Cancelled", "Lost"]])
 				query_filters1.append(["docstatus", "=", 1])
 		
 				quo_doc_per_customer = frappe.get_all("Quotation", filters=query_filters1, fields=["name", "grand_total", "expected_closure_date", "customer_name", "jih__tender"])
