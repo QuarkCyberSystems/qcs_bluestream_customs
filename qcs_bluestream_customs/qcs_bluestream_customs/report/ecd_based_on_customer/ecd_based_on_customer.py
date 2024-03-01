@@ -38,6 +38,12 @@ def get_columns(filters):
 			"fieldtype": "Link",
 			"options": "Quotation",
 			"width": 200,
+		},
+		{
+			"label": "JIH / Tender",
+			"fieldname": "jih__tender",
+			"fieldtype": "Data",
+			"width": 200,
 		}
 	]
  
@@ -56,6 +62,7 @@ def get_columns(filters):
 	query_filters.append(["expected_closure_date", "<=", filters.get("to_date")])
 	if filters.get("status"):
 		query_filters.append(["quotation_status", "=", filters.get("status")])
+	query_filters.append(["status", "not in", ["Cancelled", "Lost"]])
 	query_filters.append(["docstatus", "=", 1])
 	
  
@@ -115,6 +122,7 @@ def get_data(filters):
 		query_filters.append(["expected_closure_date", "<=", filters.get("to_date")])
 		if filters.get("status"):
 			query_filters.append(["quotation_status", "=", filters.get("status")])
+		query_filters.append(["status", "not in", ["Cancelled", "Lost"]])
 		query_filters.append(["docstatus", "=", 1])
 		
 		customer = []
@@ -151,9 +159,10 @@ def get_data(filters):
 			query_filters1.append(["expected_closure_date", "<=", filters.get("to_date")])
 			if filters.get("status"):
 				query_filters1.append(["quotation_status", "=", filters.get("status")])
+			query_filters1.append(["status", "not in", ["Cancelled", "Lost"]])
 			query_filters1.append(["docstatus", "=", 1])
 	
-			quo_doc_per_customer = frappe.get_all("Quotation", filters=query_filters1, fields=["name", "grand_total", "expected_closure_date", "customer_name"])
+			quo_doc_per_customer = frappe.get_all("Quotation", filters=query_filters1, fields=["name", "grand_total", "expected_closure_date", "customer_name", "jih__tender"])
 	
 			grand_total_per_date = {}
 			for i in quo_doc_per_customer:
@@ -163,7 +172,7 @@ def get_data(filters):
 				
 				date = date1.strftime('%b %Y')
     
-				quot_row = {"name": i.get("name"), "cus_name": i.get("customer_name"), "indent": 2, date: i.get("grand_total"), "total_amount": i.get("grand_total")}
+				quot_row = {"name": i.get("name"), "jih__tender": i.get("jih__tender"), "cus_name": i.get("customer_name"), "indent": 2, date: i.get("grand_total"), "total_amount": i.get("grand_total")}
 				quotation_values.append(quot_row)
     
 				if date not in grand_total_per_date:
@@ -209,7 +218,7 @@ def get_data(filters):
   
 	else:
 	 
-		set_sastus = ["Quotation Pending", "On track", "Delayed", "Prolonged Delay"]
+		set_sastus = ["Quotation Pending", "On track", "Delayed", "Prolonged Delay", "Under Negotiation"]
 		status_row1 = {"status": "Grand Total"}
 		over_all_amount1 = {}
 		overall_total_mo1 = []
@@ -229,6 +238,7 @@ def get_data(filters):
 			query_filters.append(["expected_closure_date", "<=", filters.get("to_date")])
 			query_filters.append(["quotation_status", "=", s_status])
 			query_filters.append(["docstatus", "=", 1])
+			query_filters.append(["status", "not in", ["Cancelled", "Lost"]])
 			
 			customer = []
 			quo_doc = frappe.get_all("Quotation", filters=query_filters)
@@ -262,9 +272,10 @@ def get_data(filters):
 				query_filters1.append(["expected_closure_date", ">=", filters.get("from_date")])
 				query_filters1.append(["expected_closure_date", "<=", filters.get("to_date")])
 				query_filters1.append(["quotation_status", "=", s_status])
+				query_filters1.append(["status", "not in", ["Cancelled", "Lost"]])
 				query_filters1.append(["docstatus", "=", 1])
 		
-				quo_doc_per_customer = frappe.get_all("Quotation", filters=query_filters1, fields=["name", "grand_total", "expected_closure_date", "customer_name"])
+				quo_doc_per_customer = frappe.get_all("Quotation", filters=query_filters1, fields=["name", "grand_total", "expected_closure_date", "customer_name", "jih__tender"])
 		
 				grand_total_per_date = {}
 				
@@ -274,7 +285,7 @@ def get_data(filters):
 					grand_total = doc.grand_total
 					
 					date = date1.strftime('%b %Y')
-					quot_row = {"name": i.get("name"), "cus_name": i.get("customer_name"), "indent": 2, date: i.get("grand_total"), "total_amount": i.get("grand_total")}
+					quot_row = {"name": i.get("name"), "jih__tender": i.get("jih__tender"), "cus_name": i.get("customer_name"), "indent": 2, date: i.get("grand_total"), "total_amount": i.get("grand_total")}
 					quotation_values.append(quot_row)
     
 					if date not in grand_total_per_date:
