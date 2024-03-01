@@ -37,6 +37,12 @@ frappe.query_reports["ECD Based on Customer"] = {
 			"options": ["", "Customer", "Lead"]
 		},
 		{
+			"fieldname":"jih__tender",
+			"label": __("JIH / Tender "),
+			"fieldtype": "Select",
+			"options": ["", "JIH", "Tender"],
+		},
+		{
 			"fieldname":"customer",
 			"label": __("Customer"),
 			"fieldtype": "Link",
