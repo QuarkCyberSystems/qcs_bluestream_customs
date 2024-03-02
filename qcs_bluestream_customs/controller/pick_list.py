@@ -830,7 +830,7 @@ def get_available_item_locations_for_serial_and_batched_item(
 					(conditions) & (sn.batch_no == location.batch_no) & (sn.warehouse == location.warehouse)
 				)
 				.orderby(sn.creation)
-				.limit(ceil(location.qty + total_picked_qty))
+				# .limit(ceil(location.qty + total_picked_qty))
 			).run(as_dict=True)
 
 			serial_nos = [sn.name for sn in serial_nos]
