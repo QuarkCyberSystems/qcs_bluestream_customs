@@ -98,7 +98,8 @@ doctype_js = {"Work Order" : "public/work_order.js",
 
 override_doctype_class = {
 	"Stock Entry": "qcs_bluestream_customs.override_file.stock_entry.BSStockEntry",
-	"Job Card": "qcs_bluestream_customs.override_file.job_card.BSJobCard"
+	"Job Card": "qcs_bluestream_customs.override_file.job_card.BSJobCard",
+	"Pick List": "qcs_bluestream_customs.controller.pick_list.BSPickList"
 }
 
 # Document Events
