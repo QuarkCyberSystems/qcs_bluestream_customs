@@ -29,9 +29,11 @@ app_license = "MIT"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-doctype_js = {"Work Order" : "public/work_order.js",
-			"Pick List": "public/pick_list.js",
-   			"Material Request": "public/material_request.js"}
+doctype_js = {
+	"Work Order": "public/work_order.js",
+	"Pick List": "public/pick_list.js",
+   	"Material Request": "public/material_request.js"
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -97,9 +99,9 @@ doctype_js = {"Work Order" : "public/work_order.js",
 # Override standard doctype classes
 
 override_doctype_class = {
-	"Stock Entry": "qcs_bluestream_customs.override_file.stock_entry.BSStockEntry",
-	"Job Card": "qcs_bluestream_customs.override_file.job_card.BSJobCard",
-	"Pick List": "qcs_bluestream_customs.controller.pick_list.BSPickList"
+	"Stock Entry": "qcs_bluestream_customs.override.stock_entry.BSStockEntry",
+	"Job Card": "qcs_bluestream_customs.override.job_card.BSJobCard",
+	"Pick List": "qcs_bluestream_customs.override.pick_list.BSPickList"
 }
 
 # Document Events
@@ -142,7 +144,7 @@ fixtures = [
 					'Stock Entry-custom_sampling_work_order',
 					'Job Card-custom_sampling_work_order'
 				]
-			 ]
+			]
 		],
 
 	},
