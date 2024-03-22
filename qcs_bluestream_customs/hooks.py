@@ -32,7 +32,8 @@ app_license = "MIT"
 doctype_js = {
 	"Work Order": "public/work_order.js",
 	"Pick List": "public/pick_list.js",
-   	"Material Request": "public/material_request.js"
+   	"Material Request": "public/material_request.js",
+    "Production Plan": "public/production_plan.js"
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -142,7 +143,18 @@ fixtures = [
 				"name", "in", [
 					'Work Order-status-in_list_view',
 					'Stock Entry-custom_sampling_work_order',
-					'Job Card-custom_sampling_work_order'
+					'Job Card-custom_sampling_work_order',
+					'Production Plan-transfer_materials-hidden'
+				]
+			]
+		],
+
+	},
+	{
+		"dt": "Custom Field", "filters": [
+			[
+				"name", "in", [
+					'Production Plan-custom_row_materials_for_purchase',
 				]
 			]
 		],
