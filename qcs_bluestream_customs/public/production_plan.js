@@ -20,6 +20,13 @@ frappe.ui.form.on('Production Plan', {
 			},
 		]);
 	},
+	custom_purchase_warehouse(frm) {
+		frm.events.get_items_for_material_requests(frm, [
+			{
+				warehouse: frm.doc.for_warehouse,
+			},
+		]);
+	},
     get_items_for_material_requests(frm, warehouses) {
 		frappe.call({
 			method: "qcs_bluestream_customs.controller.production_plan.get_items_for_material_requests",

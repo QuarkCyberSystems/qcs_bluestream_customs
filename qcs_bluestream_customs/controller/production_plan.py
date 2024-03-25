@@ -1629,11 +1629,15 @@ def get_items_for_material_requests(doc, warehouses=None, get_parent_warehouse_d
 	final_mr_items = []
 	for i in range(0, len(mr_items)):
 		if doc.get("ignore_existing_ordered_qty") == 1 or doc.get("include_safety_stock") == 1:
-			final_mr_items.append(mr_items[i])
+			item = mr_items[i].copy()
+			item["warehouse"] = doc.get("custom_purchase_warehouse")
+			final_mr_items.append(item)
 		else:
 			if (mr_items[i].get("material_request_type") == "Purchase"):
 				if mr_items[i].get("actual_qty") == 0:
-					final_mr_items.append(mr_items[i])
+					item = mr_items[i].copy()
+					item["warehouse"] = doc.get("custom_purchase_warehouse")
+					final_mr_items.append(item)
 		
 				else:
 					if mr_items[i].get("actual_qty") < mr_items[i].get("required_bom_qty"):
@@ -1641,6 +1645,7 @@ def get_items_for_material_requests(doc, warehouses=None, get_parent_warehouse_d
 							item = mr_items[i].copy()
 							item["material_request_type"] = "Purchase"
 							item["quantity"] = qty
+							item["warehouse"] = doc.get("custom_purchase_warehouse")
 							final_mr_items.append(item)
 					if mr_items[i].get("actual_qty") > mr_items[i].get("required_bom_qty"):
 						pass
@@ -1648,6 +1653,7 @@ def get_items_for_material_requests(doc, warehouses=None, get_parent_warehouse_d
 				if mr_items[i].get("actual_qty") == 0:
 					item = mr_items[i].copy()
 					item["material_request_type"] = "Purchase"
+					item["warehouse"] = doc.get("custom_purchase_warehouse")
 					final_mr_items.append(item)
 				else:
 					if mr_items[i].get("actual_qty") < mr_items[i].get("required_bom_qty"):
@@ -1655,11 +1661,12 @@ def get_items_for_material_requests(doc, warehouses=None, get_parent_warehouse_d
 						item = mr_items[i].copy()
 						item["material_request_type"] = "Purchase"
 						item["quantity"] = qty
+						item["warehouse"] = doc.get("custom_purchase_warehouse")
 						final_mr_items.append(item)
 					if mr_items[i].get("actual_qty") > mr_items[i].get("required_bom_qty"):
 						pass
 				
-      
+	  
 	return final_mr_items
 
 
