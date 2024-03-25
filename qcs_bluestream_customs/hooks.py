@@ -155,6 +155,7 @@ fixtures = [
 			[
 				"name", "in", [
 					'Production Plan-custom_row_materials_for_purchase',
+					'Production Plan-custom_purchase_warehouse',
 				]
 			]
 		],
