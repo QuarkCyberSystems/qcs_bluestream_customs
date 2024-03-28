@@ -244,7 +244,7 @@ class BSJobCard(Document):
 
 		time_logs.extend(self.get_time_logs(args, "Job Card Time Log"))
 
-		time_logs.extend(self.get_time_logs(args, "Job Card Scheduled Time"))
+		# time_logs.extend(self.get_time_logs(args, "Job Card Scheduled Time"))
 
 		if not time_logs:
 			return {}
