@@ -1,5 +1,8 @@
 frappe.ui.form.on('Material Request', {
     refresh: (frm) => {
+        setTimeout(() => {
+            frm.remove_custom_button('Pick List', 'Create');
+        }, 10);
         if(cur_frm.doc.docstatus == 1  && frm.doc.status != 'Stopped'){
             frm.add_custom_button('Create Pick List', function() {
                 frappe.model.open_mapped_doc({
@@ -8,5 +11,5 @@ frappe.ui.form.on('Material Request', {
                 });
             }, __('Create'));
         }
-    }
+    },
 })

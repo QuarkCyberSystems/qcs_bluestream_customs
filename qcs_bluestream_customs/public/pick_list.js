@@ -1,5 +1,8 @@
 frappe.ui.form.on('Pick List', {
     refresh: (frm) => {
+        setTimeout(() => {
+            frm.remove_custom_button('Stock Entry', 'Create');
+        }, 10);
         if(cur_frm.doc.docstatus == 1){
             frm.add_custom_button('Create Stock Entry', function() {
                 frappe.xcall('qcs_bluestream_customs.override.pick_list.create_stock_entry', {
