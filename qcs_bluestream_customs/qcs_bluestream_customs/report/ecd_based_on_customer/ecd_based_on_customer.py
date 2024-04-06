@@ -47,13 +47,13 @@ def get_columns(filters):
 		}
 	]
  
-	if filters.get("jih__tender"):
-		columns.append({
-			"label": "JIH / Tender",
-			"fieldname": "jih__tender",
-			"fieldtype": "Data",
-			"width": 200,
-		})
+	# if filters.get("jih__tender"):
+	# 	columns.append({
+	# 		"label": "JIH / Tender",
+	# 		"fieldname": "jih__tender",
+	# 		"fieldtype": "Data",
+	# 		"width": 200,
+	# 	})
  
 	query_filters = []
 	if filters.get("employee"):
