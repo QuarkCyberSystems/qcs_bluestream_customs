@@ -40,12 +40,20 @@ def get_columns(filters):
 			"width": 200,
 		},
 		{
-			"label": "JIH / Tender",
-			"fieldname": "jih__tender",
+			"label": "RFQ No / Project Name",
+			"fieldname": "rfq_no_project_name",
 			"fieldtype": "Data",
 			"width": 200,
 		}
 	]
+ 
+	# if filters.get("jih__tender"):
+	# 	columns.append({
+	# 		"label": "JIH / Tender",
+	# 		"fieldname": "jih__tender",
+	# 		"fieldtype": "Data",
+	# 		"width": 200,
+	# 	})
  
 	query_filters = []
 	if filters.get("employee"):
@@ -168,7 +176,7 @@ def get_data(filters):
 				query_filters1.append(["jih__tender", "=", filters.get("jih__tender")])
 			query_filters1.append(["docstatus", "=", 1])
 	
-			quo_doc_per_customer = frappe.get_all("Quotation", filters=query_filters1, fields=["name", "grand_total", "expected_closure_date", "customer_name", "jih__tender"])
+			quo_doc_per_customer = frappe.get_all("Quotation", filters=query_filters1, fields=["name", "grand_total", "expected_closure_date", "customer_name", "jih__tender", "rfq_no_project_name"])
 	
 			grand_total_per_date = {}
 			for i in quo_doc_per_customer:
@@ -177,10 +185,10 @@ def get_data(filters):
 				grand_total = doc.grand_total
 				
 				date = date1.strftime('%b %Y')
-    
-				quot_row = {"name": i.get("name"), "jih__tender": i.get("jih__tender"), "cus_name": i.get("customer_name"), "indent": 2, date: i.get("grand_total"), "total_amount": i.get("grand_total")}
+	
+				quot_row = {"name": i.get("name"), "jih__tender": i.get("jih__tender"), "rfq_no_project_name": i.get("rfq_no_project_name"), "cus_name": i.get("customer_name"), "indent": 2, date: i.get("grand_total"), "total_amount": i.get("grand_total")}
 				quotation_values.append(quot_row)
-    
+	
 				if date not in grand_total_per_date:
 					grand_total_per_date[date] = grand_total
 				else:
@@ -217,7 +225,7 @@ def get_data(filters):
 			for quot_val in quotation_values:
 				if (vlues.get("cus") == quot_val.get("cus_name")):
 					data.append(quot_val)
-     
+	 
 		frappe.errprint(status_row1)
 		data.append(status_row1)
 				
@@ -285,7 +293,7 @@ def get_data(filters):
 				if filters.get("jih__tender"):
 					query_filters1.append(["jih__tender", "=", filters.get("jih__tender")])
 		
-				quo_doc_per_customer = frappe.get_all("Quotation", filters=query_filters1, fields=["name", "grand_total", "expected_closure_date", "customer_name", "jih__tender"])
+				quo_doc_per_customer = frappe.get_all("Quotation", filters=query_filters1, fields=["name", "grand_total", "expected_closure_date", "customer_name", "jih__tender", "rfq_no_project_name"])
 		
 				grand_total_per_date = {}
 				
@@ -295,9 +303,9 @@ def get_data(filters):
 					grand_total = doc.grand_total
 					
 					date = date1.strftime('%b %Y')
-					quot_row = {"name": i.get("name"), "jih__tender": i.get("jih__tender"), "cus_name": i.get("customer_name"), "indent": 2, date: i.get("grand_total"), "total_amount": i.get("grand_total")}
+					quot_row = {"name": i.get("name"), "jih__tender": i.get("jih__tender"), "rfq_no_project_name": i.get("rfq_no_project_name"), "cus_name": i.get("customer_name"), "indent": 2, date: i.get("grand_total"), "total_amount": i.get("grand_total")}
 					quotation_values.append(quot_row)
-    
+	
 					if date not in grand_total_per_date:
 						grand_total_per_date[date] = grand_total
 					else:
@@ -307,12 +315,12 @@ def get_data(filters):
 						over_all_amount[date] = grand_total
 					else:
 						over_all_amount[date] += grand_total
-      
+	  
 					if date not in over_all_amount1:
 						over_all_amount1[date] = grand_total
 					else:
 						over_all_amount1[date] += grand_total
-      
+	  
 		######	
 				for date, total in grand_total_per_date.items():
 					row[str(date)] = total
@@ -326,7 +334,7 @@ def get_data(filters):
 			for date, total in over_all_amount.items():
 				status_row[str(date)] = total
 				overall_total_mo.append(total)
-    
+	
 		
 			status_row["total_amount"] = sum(overall_total_mo)
 			status_row["indent"] = 0
@@ -338,11 +346,11 @@ def get_data(filters):
 				for quot_val in quotation_values:
 					if (vlues.get("cus") == quot_val.get("cus_name")):
 						data.append(quot_val)
-      
+	  
 		for date, total in over_all_amount1.items():
 			status_row1[str(date)] = total
 			overall_total_mo1.append(total)
-      
+	  
 		status_row1["total_amount"] = sum(overall_total_mo1)
 		status_row1["indent"] = 0
 		data.append(status_row1)
