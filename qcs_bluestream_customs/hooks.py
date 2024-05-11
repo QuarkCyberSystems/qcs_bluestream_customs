@@ -34,7 +34,8 @@ doctype_js = {
 	"Work Order": "public/work_order.js",
 	"Pick List": "public/pick_list.js",
 	"Material Request": "public/material_request.js",
-	"Production Plan": "public/production_plan.js"
+	"Production Plan": "public/production_plan.js",
+	"Quality Inspection": "public/quality_inspection.js"
 }
 
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
@@ -147,6 +148,14 @@ fixtures = [
 					'Stock Entry-custom_sampling_work_order',
 					'Job Card-custom_sampling_work_order',
 					'Production Plan-transfer_materials-hidden'
+					'Quality Inspection-reference_type-reqd',
+					'Quality Inspection-reference_name-reqd',
+					'Quality Inspection-main-field_order',
+					'Quality Inspection-status-options',
+					'Non Conformance-main-naming_rule',
+					'Non Conformance-main-autoname',
+					'Non Conformance-details-label',
+					'Non Conformance-main-field_order',
 				]
 			]
 		]

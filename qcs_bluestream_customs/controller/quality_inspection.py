@@ -1,4 +1,4 @@
-# Copyright (c) 2024, Frappe Technologies Pvt. Ltd. and contributors
+# Copyright (c) 2024, Quark Cyber Systems FZC
 # For license information, please see license.txt
 
 
@@ -18,7 +18,7 @@ def update_custom_quality_inspection_details(quality_inspection, method=None):
             if quality_inspection.custom_sales_order != work_order.sales_order:
                 quality_inspection.custom_sales_order = work_order.sales_order
             if quality_inspection.custom_customer != sales_order.customer:
-                quality_inspection.custom_customer = work_order.customer
+                quality_inspection.custom_customer = sales_order.customer
         else:
             pass
     else:
