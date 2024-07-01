@@ -29,12 +29,15 @@ app_license = "MIT"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
+
 doctype_js = {
 	"Work Order": "public/work_order.js",
 	"Pick List": "public/pick_list.js",
-   	"Material Request": "public/material_request.js",
-    "Production Plan": "public/production_plan.js"
+	"Material Request": "public/material_request.js",
+	"Production Plan": "public/production_plan.js",
+	"Quality Inspection": "public/quality_inspection.js"
 }
+
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -109,11 +112,11 @@ override_doctype_class = {
 # ---------------
 # Hook on document methods and events
 
-#doc_events = {
-#    "Item": {
-#       "validate": "qcs_bluestream_customs.controller.qcs_hooks.add_item_description"
-#    }
-#}
+doc_events = {
+	"Quality Inspection": {
+		"validate": "qcs_bluestream_customs.controller.quality_inspection.update_custom_quality_inspection_details"
+	}
+}
 
 # Scheduled Tasks
 # ---------------
@@ -145,10 +148,17 @@ fixtures = [
 					'Stock Entry-custom_sampling_work_order',
 					'Job Card-custom_sampling_work_order',
 					'Production Plan-transfer_materials-hidden'
+					'Quality Inspection-reference_type-reqd',
+					'Quality Inspection-reference_name-reqd',
+					'Quality Inspection-main-field_order',
+					'Quality Inspection-status-options',
+					'Non Conformance-main-naming_rule',
+					'Non Conformance-main-autoname',
+					'Non Conformance-details-label',
+					'Non Conformance-main-field_order',
 				]
 			]
-		],
-
+		]
 	},
 	{
 		"dt": "Custom Field", "filters": [
@@ -156,14 +166,53 @@ fixtures = [
 				"name", "in", [
 					'Production Plan-custom_row_materials_for_purchase',
 					'Production Plan-custom_purchase_warehouse',
+					'Pick List-custom_job_card',
+					'Pick List Item-custom_job_card_item',
+					'Material Request-custom_sales_order',
+					'Quality Inspection-custom_sales_order',
+					'Quality Inspection-custom_customer',
+					'Quality Inspection-custom_accept_quantity',
+					'Quality Inspection-custom_rejected_quantity',
+					'Quality Inspection-custom_rejection_reason',
+					'Quality Inspection-custom_operation',
+					'Quality Inspection-custom_work_order',
+					'Non Conformance-custom_naming_series',
+					'Non Conformance-custom_department',
+					'Non Conformance-custom_item',
+					'Non Conformance-custom_sales_order',
+					'Non Conformance-custom_customer',
+					'Non Conformance-custom_section_break_tqglp',
+					'Non Conformance-custom_details_reviewed',
+					'Non Conformance-custom_details_review_date',
+					'Non Conformance-custom_column_break_xaxkm',
+					'Non Conformance-custom_details_agreed_by',
+					'Non Conformance-custom_details_agreed_date',
+					'Non Conformance-custom_section_break_ekhmj',
+					'Non Conformance-custom_root_cause_analysis',
+					'Non Conformance-custom_section_break_nodvx',
+					'Non Conformance-custom_section_break_mzqyo',
+					'Non Conformance-custom_corrective_responsibility',
+					'Non Conformance-custom_column_break_ftcjx',
+					'Non Conformance-custom_corrective_date',
+					'Non Conformance-custom_section_break_e2pf4',
+					'Non Conformance-custom_section_break_cvabv',
+					'Non Conformance-custom_preventive_responsibility',
+					'Non Conformance-custom_preventive_agreed_by',
+					'Non Conformance-custom_column_break_24itc',
+					'Non Conformance-custom_preventive_date',
+					'Non Conformance-custom_section_break_iywhj',
+					'Non Conformance-custom_column_break_vur4o',
+					'Non Conformance-custom_quality_control_engineer',
+					'Non Conformance-custom_column_break_p6de3',
+					'Non Conformance-custom_operation_director',
+					'Non Conformance-custom_section_break_ngs4g',
+					'Non Conformance-custom_closed_out_by',
+					'Non Conformance-custom_column_break_wggm7',
 				]
 			]
 		],
-
 	},
-	
 ]
-
 
 # Testing
 # -------
@@ -171,12 +220,11 @@ fixtures = [
 # before_tests = "qcs_bluestream_customs.install.before_tests"
 # Overriding Methods
 # ------------------------------
-#
+
 override_whitelisted_methods = {
-	# "frappe.desk.doctype.event.event.get_events": "qcs_bluestream_customs.event.get_events",
 	"erpnext.stock.doctype.pick_list.pick_list.create_stock_entry": "qcs_bluestream_customs.controller.pick_list.create_stock_entry"
 }
-#
+
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
