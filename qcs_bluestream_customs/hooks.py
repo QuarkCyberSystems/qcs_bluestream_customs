@@ -35,7 +35,8 @@ doctype_js = {
 	"Pick List": "public/pick_list.js",
 	"Material Request": "public/material_request.js",
 	"Production Plan": "public/production_plan.js",
-	"Quality Inspection": "public/quality_inspection.js"
+	"Quality Inspection": "public/quality_inspection.js",
+	"Purchase Order": "public/purchase_order.js"
 }
 
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}

@@ -1,0 +1,117 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-01 13:47:35.853579",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "supplier",
+  "supplier_name",
+  "supplier_country",
+  "posting_date",
+  "status_of_the_shipment",
+  "column_break_ltqf",
+  "estimated_timed_dispatch",
+  "estimated_shipment_date",
+  "actual_dispatch_date",
+  "actual_arrival_date",
+  "shipment_mode",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "Supplier",
+   "options": "Supplier"
+  },
+  {
+   "fetch_from": "supplier.supplier_name",
+   "fieldname": "supplier_name",
+   "fieldtype": "Data",
+   "label": "Supplier Name"
+  },
+  {
+   "fetch_from": "supplier.country",
+   "fieldname": "supplier_country",
+   "fieldtype": "Data",
+   "label": "Supplier Country"
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date"
+  },
+  {
+   "fieldname": "status_of_the_shipment",
+   "fieldtype": "Select",
+   "label": "Status of the Shipment",
+   "options": "\nPending\nDispatched\nArrived"
+  },
+  {
+   "fieldname": "column_break_ltqf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "estimated_timed_dispatch",
+   "fieldtype": "Date",
+   "label": "Estimated Timed Dispatch"
+  },
+  {
+   "fieldname": "estimated_shipment_date",
+   "fieldtype": "Date",
+   "label": "Estimated Shipment Date"
+  },
+  {
+   "fieldname": "actual_dispatch_date",
+   "fieldtype": "Date",
+   "label": "Actual Dispatch Date"
+  },
+  {
+   "fieldname": "actual_arrival_date",
+   "fieldtype": "Date",
+   "label": "Actual Arrival Date"
+  },
+  {
+   "fieldname": "shipment_mode",
+   "fieldtype": "Select",
+   "label": "Shipment Mode",
+   "options": "\nAir\nSea\nLand"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Shipping Tracker",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-07-01 14:05:02.470145",
+ "modified_by": "Administrator",
+ "module": "Qcs Bluestream Customs",
+ "name": "Shipping Tracker",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
