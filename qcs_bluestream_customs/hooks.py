@@ -177,6 +177,8 @@ fixtures = [
 					'Quality Inspection-custom_rejection_reason',
 					'Quality Inspection-custom_operation',
 					'Quality Inspection-custom_work_order',
+					'Quality Inspection-custom_ftp',
+					'Quality Inspection-custom_nr_failed',
 					'Non Conformance-custom_naming_series',
 					'Non Conformance-custom_department',
 					'Non Conformance-custom_item',
