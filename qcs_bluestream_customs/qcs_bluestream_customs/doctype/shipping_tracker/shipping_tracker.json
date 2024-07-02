@@ -1,22 +1,28 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "naming_series:",
  "creation": "2024-07-01 13:47:35.853579",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "naming_series",
   "supplier",
   "supplier_name",
   "supplier_country",
+  "column_break_gmom",
   "posting_date",
   "status_of_the_shipment",
-  "column_break_ltqf",
+  "shipment_mode",
+  "amended_from",
+  "section_break_iomr",
   "estimated_timed_dispatch",
   "estimated_shipment_date",
+  "column_break_ddwk",
   "actual_dispatch_date",
   "actual_arrival_date",
-  "shipment_mode",
-  "amended_from"
+  "section_break_gnpw",
+  "items"
  ],
  "fields": [
   {
@@ -47,10 +53,6 @@
    "fieldtype": "Select",
    "label": "Status of the Shipment",
    "options": "\nPending\nDispatched\nArrived"
-  },
-  {
-   "fieldname": "column_break_ltqf",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "estimated_timed_dispatch",
@@ -87,15 +89,44 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "column_break_gmom",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_iomr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_ddwk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_gnpw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Shipping Tracker Item"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "BS-ST-.YYYY.-"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-01 14:05:02.470145",
+ "modified": "2024-07-02 14:54:28.615209",
  "modified_by": "Administrator",
  "module": "Qcs Bluestream Customs",
  "name": "Shipping Tracker",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {

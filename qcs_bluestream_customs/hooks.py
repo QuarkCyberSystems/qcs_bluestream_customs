@@ -200,17 +200,13 @@ fixtures = [
 					'Non Conformance-custom_section_break_e2pf4',
 					'Non Conformance-custom_section_break_cvabv',
 					'Non Conformance-custom_preventive_responsibility',
-					'Non Conformance-custom_preventive_agreed_by',
 					'Non Conformance-custom_column_break_24itc',
 					'Non Conformance-custom_preventive_date',
 					'Non Conformance-custom_section_break_iywhj',
 					'Non Conformance-custom_column_break_vur4o',
 					'Non Conformance-custom_quality_control_engineer',
 					'Non Conformance-custom_column_break_p6de3',
-					'Non Conformance-custom_operation_director',
-					'Non Conformance-custom_section_break_ngs4g',
-					'Non Conformance-custom_closed_out_by',
-					'Non Conformance-custom_column_break_wggm7',
+					'Non Conformance-custom_operation_director'
 				]
 			]
 		],
