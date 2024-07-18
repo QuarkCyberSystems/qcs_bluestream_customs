@@ -5,10 +5,12 @@ import frappe
 from frappe import _
 from frappe.utils import flt
 
+
 def execute(filters=None):
     columns = get_columns(filters)
     data = get_data(filters)
     return columns, data
+
 
 def get_columns(filters):
     columns = [
@@ -27,7 +29,21 @@ def get_columns(filters):
             "width": 140,
         },
         {
-            "label": _("Item"),
+            "label": _("Shipping Tracker"),
+            "options": "Shipping Tracker",
+            "fieldname": "shipping_tracker",
+            "fieldtype": "Link",
+            "width": 140,
+        },
+        {
+            "label": _("Supplier"),
+            "options": "Supplier",
+            "fieldname": "supplier",
+            "fieldtype": "Link",
+            "width": 140,
+        },
+        {
+            "label": _("Item Code"),
             "fieldname": "item_code",
             "fieldtype": "Link",
             "options": "Item",
@@ -52,51 +68,94 @@ def get_columns(filters):
             "fieldtype": "Link",
             "width": 140,
         },
+        {
+            "label": _("Shipment Mode"),
+            "fieldname": "shipment_mode",
+            "fieldtype": "Data",
+            "width": 140,
+        },
+        {
+            "label": _("Status"),
+            "fieldname": "status_of_the_shipment",
+            "fieldtype": "Data",
+            "width": 140,
+        },
+        {
+            "label": _("Estimated Timed Dispatch"),
+            "fieldname": "estimated_timed_dispatch",
+            "fieldtype": "Date",
+            "width": 140,
+        },
+        {
+            "label": _("Estimated Shipment Date"),
+            "fieldname": "estimated_shipment_date",
+            "fieldtype": "Date",
+            "width": 140,
+        },
+        {
+            "label": _("Actual Dispatch Date"),
+            "fieldname": "actual_dispatch_date",
+            "fieldtype": "Date",
+            "width": 140,
+        },
+        {
+            "label": _("Actual Arrival Date"),
+            "fieldname": "actual_arrival_date",
+            "fieldtype": "Date",
+            "width": 140,
+        }
     ]
     return columns
 
+
 def apply_filters_on_query(filters, parent, child, query):
-    if filters.get("company"):
-        query = query.where(parent.company == filters.get("company"))
-
-    if filters.get("from_date"):
-        query = query.where(parent.transaction_date >= filters.get("from_date"))
-
-    if filters.get("to_date"):
-        query = query.where(parent.transaction_date <= filters.get("to_date"))
+    if filters.get("status") == "Draft":
+        query = query.where(parent.docstatus == 0)
+    elif filters.get("status") == "Submitted":
+        query = query.where(parent.docstatus == 1)
 
     return query
 
+
 def get_data(filters):
-    purchase_order_entry = get_po_entries(filters)
-    mr_records, _ = get_mapped_mr_details(filters)
+    shipping_tracker_entry = get_st_entries(filters)
+    po_records, _ = get_mapped_po_details(filters)
     procurement_record = []
 
-    for po in purchase_order_entry:
-        # fetch material records linked to the purchase order item
-        material_requests = mr_records.get(po.material_request_item, [{}])
+    for st in shipping_tracker_entry:
+        purchase_orders = po_records.get(st.purchase_order_item, [{}])
 
-        for mr_record in material_requests:
+        for po_record in purchase_orders:
             procurement_detail = {
-                "material_request_no": po.material_request,
-                "purchase_order": po.parent,
-                "item_code": po.item_code,
-                "item_name":po.item_name,
-                "quantity": flt(po.qty),
-                "unit_of_measurement": po.stock_uom,
+                "material_request_no": st.material_request,
+                "purchase_order": st.purchase_order,
+                "shipping_tracker": st.parent,
+                "supplier": st.supplier,
+                "item_code": st.item_code,
+                "item_name": st.item_name,
+                "quantity": flt(st.qty),
+                "unit_of_measurement": st.uom,
+                "shipment_mode": st.shipment_mode,
+                "status_of_the_shipment": st.status_of_the_shipment,
+                "estimated_timed_dispatch": st.estimated_timed_dispatch,
+                "estimated_shipment_date": st.estimated_shipment_date,
+                "actual_dispatch_date": st.actual_dispatch_date,
+                "actual_arrival_date": st.actual_arrival_date
+                
             }
             procurement_record.append(procurement_detail)
 
     return procurement_record
 
-def get_mapped_mr_details(filters):
-    mr_records = {}
-    parent = frappe.qb.DocType("Material Request")
-    child = frappe.qb.DocType("Material Request Item")
+
+def get_mapped_po_details(filters):
+    po_records = {}
+    parent = frappe.qb.DocType("Purchase Order")
+    child = frappe.qb.DocType("Purchase Order Item")
 
     query = (
         frappe.qb.from_(parent)
-        .from_(child)
+        .join(child).on(parent.name == child.parent)
         .select(
             child.name,
             child.parent,
@@ -105,40 +164,49 @@ def get_mapped_mr_details(filters):
             child.qty,
             child.uom,
         )
-        .where((parent.per_ordered >= 0) & (parent.name == child.parent) & (parent.docstatus == 1))
+        .where(parent.docstatus == 1)
     )
+    
     query = apply_filters_on_query(filters, parent, child, query)
 
-    mr_details = query.run(as_dict=True)
+    po_details = query.run(as_dict=True)
 
-    for record in mr_details:
-        mr_records.setdefault(record.name, []).append(frappe._dict(record))
+    for record in po_details:
+        po_records.setdefault(record.name, []).append(frappe._dict(record))
 
-    return mr_records, []
+    return po_records, []
 
-def get_po_entries(filters):
-    parent = frappe.qb.DocType("Purchase Order")
-    child = frappe.qb.DocType("Purchase Order Item")
+
+def get_st_entries(filters):
+    parent = frappe.qb.DocType("Shipping Tracker")
+    child = frappe.qb.DocType("Shipping Tracker Item")
 
     query = (
         frappe.qb.from_(parent)
-        .from_(child)
+        .join(child).on(parent.name == child.parent)
         .select(
             child.parent,
             child.material_request,
-            child.material_request_item,
+            child.purchase_order,
+            child.purchase_order_item,
+            parent.supplier,
             child.item_code,
             child.item_name,
             child.qty,
-            child.stock_uom,
+            child.uom,
+            parent.shipment_mode,
+            parent.status_of_the_shipment,
+            parent.estimated_timed_dispatch,
+            parent.estimated_shipment_date,
+            parent.actual_dispatch_date,
+            child.actual_arrival_date
         )
-        .where(
-            (parent.docstatus == 1)
-            & (parent.name == child.parent)
-            & (parent.status.notin(("Closed", "Completed", "Cancelled")))
-        )
-        .groupby(parent.name, child.material_request_item)
+        .groupby(parent.name, child.purchase_order_item)
     )
+    
+    if filters.get("purchase_order"):
+        query = query.where(child.purchase_order == filters.get("purchase_order"))
+        
     query = apply_filters_on_query(filters, parent, child, query)
 
     return query.run(as_dict=True)
