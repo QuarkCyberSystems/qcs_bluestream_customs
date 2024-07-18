@@ -14,13 +14,13 @@
   "posting_date",
   "status_of_the_shipment",
   "shipment_mode",
+  "purchase_order",
   "amended_from",
   "section_break_iomr",
   "estimated_timed_dispatch",
   "estimated_shipment_date",
   "column_break_ddwk",
   "actual_dispatch_date",
-  "actual_arrival_date",
   "section_break_gnpw",
   "items"
  ],
@@ -28,6 +28,7 @@
   {
    "fieldname": "supplier",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Supplier",
    "options": "Supplier"
   },
@@ -35,6 +36,7 @@
    "fetch_from": "supplier.supplier_name",
    "fieldname": "supplier_name",
    "fieldtype": "Data",
+   "in_standard_filter": 1,
    "label": "Supplier Name"
   },
   {
@@ -44,25 +46,20 @@
    "label": "Supplier Country"
   },
   {
-   "fieldname": "posting_date",
-   "fieldtype": "Date",
-   "label": "Posting Date"
-  },
-  {
    "fieldname": "status_of_the_shipment",
    "fieldtype": "Select",
    "label": "Status of the Shipment",
-   "options": "\nPending\nDispatched\nArrived"
+   "options": "Pending\nDispatched\nArrived"
   },
   {
    "fieldname": "estimated_timed_dispatch",
    "fieldtype": "Date",
-   "label": "Estimated Timed Dispatch"
+   "label": "Estimated Time of Dispatch"
   },
   {
    "fieldname": "estimated_shipment_date",
    "fieldtype": "Date",
-   "label": "Estimated Shipment Date"
+   "label": "Estimated Time of Arrival"
   },
   {
    "fieldname": "actual_dispatch_date",
@@ -70,15 +67,10 @@
    "label": "Actual Dispatch Date"
   },
   {
-   "fieldname": "actual_arrival_date",
-   "fieldtype": "Date",
-   "label": "Actual Arrival Date"
-  },
-  {
    "fieldname": "shipment_mode",
    "fieldtype": "Select",
    "label": "Shipment Mode",
-   "options": "\nAir\nSea\nLand"
+   "options": "\nAir\nSea\nLand\nCourier"
   },
   {
    "fieldname": "amended_from",
@@ -117,12 +109,25 @@
    "fieldtype": "Select",
    "label": "Series",
    "options": "BS-ST-.YYYY.-"
+  },
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date"
+  },
+  {
+   "fieldname": "purchase_order",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Purchase Order",
+   "options": "Purchase Order"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-02 14:54:28.615209",
+ "modified": "2024-07-16 13:28:45.063158",
  "modified_by": "Administrator",
  "module": "Qcs Bluestream Customs",
  "name": "Shipping Tracker",
@@ -138,6 +143,30 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Purchase Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Purchase User",
    "share": 1,
    "write": 1
   }

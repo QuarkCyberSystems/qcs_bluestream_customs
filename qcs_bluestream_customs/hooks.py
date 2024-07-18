@@ -116,6 +116,9 @@ override_doctype_class = {
 doc_events = {
 	"Quality Inspection": {
 		"validate": "qcs_bluestream_customs.controller.quality_inspection.update_custom_quality_inspection_details"
+	},
+	"Purchase Receipt": {
+		"on_submit": "qcs_bluestream_customs.controller.purchase_controller.update_shipping_tracker"
 	}
 }
 
@@ -230,6 +233,10 @@ override_whitelisted_methods = {
 # override_doctype_dashboards = {
 #	"Task": "qcs_bluestream_customs.task.get_dashboard_data"
 # }
+override_doctype_dashboards = {
+	"Purchase Order": "qcs_bluestream_customs.controller.purchase_order_dashboard.get_dashboard_for_purchase_order" 
+}
+
 
 # exempt linked doctypes from being automatically cancelled
 #

@@ -8,6 +8,7 @@
  "field_order": [
   "item_code",
   "item_name",
+  "actual_arrival_date",
   "column_break_brek",
   "qty",
   "uom",
@@ -75,6 +76,11 @@
   {
    "fieldname": "purchase_order",
    "fieldtype": "Link",
+   "in_filter": 1,
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Purchase Order",
    "options": "Purchase Order"
   },
@@ -86,12 +92,17 @@
   {
    "fieldname": "column_break_pfbc",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "actual_arrival_date",
+   "fieldtype": "Date",
+   "label": "Actual Arrival Date"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-02 09:54:39.876337",
+ "modified": "2024-07-16 14:51:04.357893",
  "modified_by": "Administrator",
  "module": "Qcs Bluestream Customs",
  "name": "Shipping Tracker Item",
