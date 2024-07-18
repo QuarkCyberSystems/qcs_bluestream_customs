@@ -117,9 +117,9 @@ doc_events = {
 	"Quality Inspection": {
 		"validate": "qcs_bluestream_customs.controller.quality_inspection.update_custom_quality_inspection_details"
 	},
-    "Purchase Receipt": {
-        "on_submit": "qcs_bluestream_customs.controller.purchase_controller.update_shipping_tracker"
-    }
+	"Purchase Receipt": {
+		"on_submit": "qcs_bluestream_customs.controller.purchase_controller.update_shipping_tracker"
+	}
 }
 
 # Scheduled Tasks
