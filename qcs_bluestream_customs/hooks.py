@@ -169,7 +169,8 @@ fixtures = [
 					'Production Plan-custom_row_materials_for_purchase',
 					'Production Plan-custom_purchase_warehouse',
 					'Pick List-custom_job_card',
-					'Pick List Item-custom_job_card_item'
+					'Pick List Item-custom_job_card_item',
+					'Material Request-custom_sales_order'
 				]
 			]
 		],
