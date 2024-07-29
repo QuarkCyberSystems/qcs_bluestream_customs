@@ -1,5 +1,3 @@
-from . import __version__ as app_version
-
 app_name = "qcs_bluestream_customs"
 app_title = "Qcs Bluestream Customs"
 app_publisher = "QCS"
@@ -172,42 +170,7 @@ fixtures = [
 					'Production Plan-custom_purchase_warehouse',
 					'Pick List-custom_job_card',
 					'Pick List Item-custom_job_card_item',
-					'Material Request-custom_sales_order',
-					'Quality Inspection-custom_sales_order',
-					'Quality Inspection-custom_customer',
-					'Quality Inspection-custom_accept_quantity',
-					'Quality Inspection-custom_rejected_quantity',
-					'Quality Inspection-custom_rejection_reason',
-					'Quality Inspection-custom_operation',
-					'Quality Inspection-custom_work_order',
-					'Non Conformance-custom_naming_series',
-					'Non Conformance-custom_department',
-					'Non Conformance-custom_item',
-					'Non Conformance-custom_sales_order',
-					'Non Conformance-custom_customer',
-					'Non Conformance-custom_section_break_tqglp',
-					'Non Conformance-custom_details_reviewed',
-					'Non Conformance-custom_details_review_date',
-					'Non Conformance-custom_column_break_xaxkm',
-					'Non Conformance-custom_details_agreed_by',
-					'Non Conformance-custom_details_agreed_date',
-					'Non Conformance-custom_section_break_ekhmj',
-					'Non Conformance-custom_root_cause_analysis',
-					'Non Conformance-custom_section_break_nodvx',
-					'Non Conformance-custom_section_break_mzqyo',
-					'Non Conformance-custom_corrective_responsibility',
-					'Non Conformance-custom_column_break_ftcjx',
-					'Non Conformance-custom_corrective_date',
-					'Non Conformance-custom_section_break_e2pf4',
-					'Non Conformance-custom_section_break_cvabv',
-					'Non Conformance-custom_preventive_responsibility',
-					'Non Conformance-custom_column_break_24itc',
-					'Non Conformance-custom_preventive_date',
-					'Non Conformance-custom_section_break_iywhj',
-					'Non Conformance-custom_column_break_vur4o',
-					'Non Conformance-custom_quality_control_engineer',
-					'Non Conformance-custom_column_break_p6de3',
-					'Non Conformance-custom_operation_director'
+					'Material Request-custom_sales_order'
 				]
 			]
 		],
