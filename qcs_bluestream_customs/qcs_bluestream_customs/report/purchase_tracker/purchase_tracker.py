@@ -109,11 +109,7 @@ def get_columns(filters):
 
 
 def apply_filters_on_query(filters, parent, child, query):
-    if filters.get("status") == "Draft":
-        query = query.where(parent.docstatus == 0)
-    elif filters.get("status") == "Submitted":
-        query = query.where(parent.docstatus == 1)
-
+    query = query.where(parent.docstatus == 0)
     return query
 
 
@@ -141,7 +137,6 @@ def get_data(filters):
                 "estimated_shipment_date": st.estimated_shipment_date,
                 "actual_dispatch_date": st.actual_dispatch_date,
                 "actual_arrival_date": st.actual_arrival_date
-                
             }
             procurement_record.append(procurement_detail)
 
@@ -166,7 +161,7 @@ def get_mapped_po_details(filters):
         )
         .where(parent.docstatus == 1)
     )
-    
+
     query = apply_filters_on_query(filters, parent, child, query)
 
     po_details = query.run(as_dict=True)
@@ -203,10 +198,10 @@ def get_st_entries(filters):
         )
         .groupby(parent.name, child.purchase_order_item)
     )
-    
+
     if filters.get("purchase_order"):
         query = query.where(child.purchase_order == filters.get("purchase_order"))
-        
+
     query = apply_filters_on_query(filters, parent, child, query)
 
     return query.run(as_dict=True)

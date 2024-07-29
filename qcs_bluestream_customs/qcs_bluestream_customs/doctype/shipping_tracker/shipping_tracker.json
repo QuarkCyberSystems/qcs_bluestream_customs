@@ -12,7 +12,7 @@
   "supplier_country",
   "column_break_gmom",
   "posting_date",
-  "status_of_the_shipment",
+  "status",
   "shipment_mode",
   "purchase_order",
   "amended_from",
@@ -28,6 +28,7 @@
   {
    "fieldname": "supplier",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Supplier",
    "options": "Supplier"
@@ -36,7 +37,6 @@
    "fetch_from": "supplier.supplier_name",
    "fieldname": "supplier_name",
    "fieldtype": "Data",
-   "in_standard_filter": 1,
    "label": "Supplier Name"
   },
   {
@@ -44,12 +44,6 @@
    "fieldname": "supplier_country",
    "fieldtype": "Data",
    "label": "Supplier Country"
-  },
-  {
-   "fieldname": "status_of_the_shipment",
-   "fieldtype": "Select",
-   "label": "Status of the Shipment",
-   "options": "Pending\nDispatched\nArrived"
   },
   {
    "fieldname": "estimated_timed_dispatch",
@@ -119,15 +113,22 @@
   {
    "fieldname": "purchase_order",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Purchase Order",
    "options": "Purchase Order"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Status of the Shipment",
+   "options": "Pending\nDispatched\nArrived"
   }
  ],
  "index_web_pages_for_search": 1,
- "is_submittable": 1,
  "links": [],
- "modified": "2024-07-16 13:28:45.063158",
+ "modified": "2024-07-29 16:21:48.403932",
  "modified_by": "Administrator",
  "module": "Qcs Bluestream Customs",
  "name": "Shipping Tracker",
@@ -171,7 +172,23 @@
    "write": 1
   }
  ],
+ "search_fields": "supplier,purchase_order",
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [
+  {
+   "color": "Orange",
+   "title": "Pending"
+  },
+  {
+   "color": "Blue",
+   "title": "Dispatched"
+  },
+  {
+   "color": "Green",
+   "title": "Arrived"
+  }
+ ],
+ "title_field": "supplier",
+ "track_changes": 1
 }
