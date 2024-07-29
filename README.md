@@ -1,6 +1,6 @@
-## Qcs Bluestream Customs
+## QCS Bluestream Customization
 
-Custom Code by QCS
+ERPNext Customizations by Quark Cyber Systems FZC
 
 #### License
 

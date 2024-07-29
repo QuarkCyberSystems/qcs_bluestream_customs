@@ -1,5 +1,3 @@
-from . import __version__ as app_version
-
 app_name = "qcs_bluestream_customs"
 app_title = "Qcs Bluestream Customs"
 app_publisher = "QCS"
