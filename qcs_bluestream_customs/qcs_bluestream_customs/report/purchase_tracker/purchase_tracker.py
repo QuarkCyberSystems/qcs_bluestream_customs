@@ -29,10 +29,22 @@ def get_columns(filters):
             "width": 140,
         },
         {
+            "label": _("Purchase Order Date"),
+            "fieldname": "purchase_order_date",
+            "fieldtype": "Date",
+            "width": 140,
+        },
+        {
             "label": _("Shipping Tracker"),
             "options": "Shipping Tracker",
             "fieldname": "shipping_tracker",
             "fieldtype": "Link",
+            "width": 140,
+        },
+        {
+            "label": _("Shipping Tracker Date"),
+            "fieldname": "shipping_tracker_date",
+            "fieldtype": "Date",
             "width": 140,
         },
         {
@@ -81,13 +93,13 @@ def get_columns(filters):
             "width": 140,
         },
         {
-            "label": _("Estimated Timed Dispatch"),
+            "label": _("Estimated Time of Dispatch (ETD)"),
             "fieldname": "estimated_timed_dispatch",
             "fieldtype": "Date",
             "width": 140,
         },
         {
-            "label": _("Estimated Shipment Date"),
+            "label": _("Estimated Time of Arrival (ETA)"),
             "fieldname": "estimated_shipment_date",
             "fieldtype": "Date",
             "width": 140,
@@ -125,7 +137,9 @@ def get_data(filters):
             procurement_detail = {
                 "material_request_no": st.material_request,
                 "purchase_order": st.purchase_order,
+                "purchase_order_date": frappe.db.get_value('Purchase Order', st.purchase_order, 'transaction_date'),
                 "shipping_tracker": st.parent,
+                "shipping_tracker_date": st.posting_date,
                 "supplier": st.supplier,
                 "item_code": st.item_code,
                 "item_name": st.item_name,
@@ -189,6 +203,7 @@ def get_st_entries(filters):
             child.item_name,
             child.qty,
             child.uom,
+            parent.posting_date,
             parent.shipment_mode,
             parent.status_of_the_shipment,
             parent.estimated_timed_dispatch,
