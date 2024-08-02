@@ -15,7 +15,6 @@
   "status",
   "shipment_mode",
   "purchase_order",
-  "amended_from",
   "section_break_iomr",
   "estimated_timed_dispatch",
   "estimated_shipment_date",
@@ -65,16 +64,6 @@
    "fieldtype": "Select",
    "label": "Shipment Mode",
    "options": "\nAir\nSea\nLand\nCourier"
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Shipping Tracker",
-   "print_hide": 1,
-   "read_only": 1,
-   "search_index": 1
   },
   {
    "fieldname": "column_break_gmom",
@@ -128,7 +117,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-29 16:21:48.403932",
+ "modified": "2024-07-31 10:59:59.001215",
  "modified_by": "Administrator",
  "module": "Qcs Bluestream Customs",
  "name": "Shipping Tracker",
