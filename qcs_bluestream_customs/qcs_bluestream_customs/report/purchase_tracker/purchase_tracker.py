@@ -146,7 +146,7 @@ def get_data(filters):
                 "quantity": flt(st.qty),
                 "unit_of_measurement": st.uom,
                 "shipment_mode": st.shipment_mode,
-                "status_of_the_shipment": st.status_of_the_shipment,
+                "status_of_the_shipment": st.status,
                 "estimated_timed_dispatch": st.estimated_timed_dispatch,
                 "estimated_shipment_date": st.estimated_shipment_date,
                 "actual_dispatch_date": st.actual_dispatch_date,
