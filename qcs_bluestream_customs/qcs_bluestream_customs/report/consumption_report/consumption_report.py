@@ -184,9 +184,10 @@ def get_stock_ledger_entries(filters, items):
         .join(se)
         .on(se.name == sle.voucher_no)
         .where(
-            (sle.docstatus < 2)  # Ensure document is not cancelled
-            & (sle.is_cancelled == 0)  # Ensure stock ledger entry is not cancelled
-            & (se.purpose == "Manufacture")  # Include only entries with purpose "Manufacture"
+            (sle.docstatus < 2)  
+            & (sle.is_cancelled == 0)  
+            & (se.purpose == "Manufacture")  
+            & (sle.voucher_type.isin(["Stock Entry", "Delivery Note"])) 
         )
         .orderby(CombineDatetime(sle.posting_date, sle.posting_time))
         .orderby(sle.creation)
