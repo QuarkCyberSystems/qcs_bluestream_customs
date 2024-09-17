@@ -1,0 +1,65 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-08-28 15:11:13.784850",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "shift",
+  "holiday_list",
+  "column_break_aeki",
+  "start_lunch_time",
+  "end_lunch_time"
+ ],
+ "fields": [
+  {
+   "fieldname": "column_break_aeki",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "start_lunch_time",
+   "fieldtype": "Time",
+   "label": "Start Lunch Time"
+  },
+  {
+   "fieldname": "end_lunch_time",
+   "fieldtype": "Time",
+   "label": "End Lunch Time"
+  },
+  {
+   "fieldname": "holiday_list",
+   "fieldtype": "Link",
+   "label": "Holiday List",
+   "options": "Holiday List"
+  },
+  {
+   "fieldname": "shift",
+   "fieldtype": "Link",
+   "label": "Shift",
+   "options": "Shift Type"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-09-05 10:13:57.811202",
+ "modified_by": "Administrator",
+ "module": "Qcs Bluestream Customs",
+ "name": "Job Card Automation Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
