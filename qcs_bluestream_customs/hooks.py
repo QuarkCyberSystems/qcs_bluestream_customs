@@ -37,7 +37,9 @@ doctype_js = {
 	"Purchase Order": "public/purchase_order.js"
 }
 
-# doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
+doctype_list_js = {
+	"Job Card": "public/job_card_custom_list.js"
+}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
@@ -123,7 +125,13 @@ doc_events = {
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
+	"cron": {
+		"* * * * *": [
+			"qcs_bluestream_customs.controller.job_card_automation.pause_and_resume_job_cards_based_on_shift",
+			"qcs_bluestream_customs.controller.job_card_automation.pause_and_resume_job_cards"
+		],
+	}
 #	"all": [
 #		"qcs_bluestream_customs.tasks.all"
 #	],
@@ -139,7 +147,7 @@ doc_events = {
 #	"monthly": [
 #		"qcs_bluestream_customs.tasks.monthly"
 #	],
-# }
+}
 
 fixtures = [
 	{

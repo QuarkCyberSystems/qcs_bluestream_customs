@@ -205,7 +205,7 @@ def get_st_entries(filters):
             child.uom,
             parent.posting_date,
             parent.shipment_mode,
-            parent.status_of_the_shipment,
+            parent.status,
             parent.estimated_timed_dispatch,
             parent.estimated_shipment_date,
             parent.actual_dispatch_date,
