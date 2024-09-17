@@ -127,7 +127,7 @@ doc_events = {
 
 scheduler_events = {
 	"cron": {
-		"* * * * *": [  
+		"* * * * *": [
 			"qcs_bluestream_customs.controller.job_card_automation.pause_and_resume_job_cards_based_on_shift",
 			"qcs_bluestream_customs.controller.job_card_automation.pause_and_resume_job_cards"
 		],
