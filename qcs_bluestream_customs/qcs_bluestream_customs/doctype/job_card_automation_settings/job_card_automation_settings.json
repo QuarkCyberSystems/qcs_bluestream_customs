@@ -5,9 +5,10 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "enabled_lunch_time",
+  "enabled",
   "column_break_mpuc",
   "enabled_shift_time",
+  "enabled_lunch_time",
   "section_break_qckt",
   "shift",
   "holiday_list",
@@ -61,12 +62,18 @@
    "fieldname": "enabled_shift_time",
    "fieldtype": "Check",
    "label": "Enabled Shift Time"
+  },
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-09-21 12:40:08.533965",
+ "modified": "2024-09-29 21:58:13.238731",
  "modified_by": "Administrator",
  "module": "Qcs Bluestream Customs",
  "name": "Job Card Automation Settings",
