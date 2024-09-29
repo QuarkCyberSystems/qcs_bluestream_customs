@@ -7,8 +7,6 @@
  "field_order": [
   "enabled",
   "column_break_mpuc",
-  "enabled_shift_time",
-  "enabled_lunch_time",
   "section_break_qckt",
   "shift",
   "holiday_list",
@@ -48,20 +46,8 @@
    "fieldtype": "Section Break"
   },
   {
-   "default": "0",
-   "fieldname": "enabled_lunch_time",
-   "fieldtype": "Check",
-   "label": "Enabled Lunch Time"
-  },
-  {
    "fieldname": "column_break_mpuc",
    "fieldtype": "Column Break"
-  },
-  {
-   "default": "0",
-   "fieldname": "enabled_shift_time",
-   "fieldtype": "Check",
-   "label": "Enabled Shift Time"
   },
   {
    "default": "0",
@@ -73,7 +59,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-09-29 21:58:13.238731",
+ "modified": "2024-09-29 23:58:19.767063",
  "modified_by": "Administrator",
  "module": "Qcs Bluestream Customs",
  "name": "Job Card Automation Settings",
