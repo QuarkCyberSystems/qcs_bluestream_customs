@@ -54,6 +54,126 @@ def convert_str_to_time(time_str):
     return datetime.strptime(time_str, '%H:%M:%S').time()
 
 
+def job_card_pause_and_resume_automation():
+    try:
+        settings = frappe.get_single("Job Card Automation Settings")
+        if not settings.enabled:
+            return
+
+        if not settings.start_lunch_time and settings.end_lunch_time:
+            return
+
+        if not settings.shift:
+            return
+
+        shift = frappe.get_doc("Shift Type", settings.shift)
+        if not (shift.start_time and shift.end_time):
+            return
+
+        if isinstance(shift.start_time, timedelta):
+            start_shift_time = (datetime(1, 1, 1) + shift.start_time).time()
+        else:
+            start_shift_time = shift.start_time
+
+        if isinstance(shift.end_time, timedelta):
+            end_shift_time = (datetime(1, 1, 1) + shift.end_time).time()
+        else:
+            end_shift_time = shift.end_time
+
+        start_lunch_time = convert_str_to_time(settings.start_lunch_time)
+        end_lunch_time = convert_str_to_time(settings.end_lunch_time)
+
+        current_time_str = get_current_time_in_timezone()
+        current_time = convert_str_to_time(current_time_str)
+
+        today_date = now_datetime().date()
+        holiday_list = settings.holiday_list
+        if is_holiday(holiday_list, today_date):
+            return
+
+        job_cards = frappe.get_all("Job Card", filters={
+                        "docstatus": 0,
+                        "custom_skip_automation": 0,
+                        "status": ["in", ["Work In Progress", "On Hold"]]
+                        },
+                        fields=["name", "status"]
+                    )
+
+        for job_card in job_cards:
+            job_card_doc = frappe.get_doc("Job Card", job_card.name)
+
+            # Hold the job card at the end of the shift
+            if current_time >= end_shift_time:
+                if job_card_doc.status == "Work In Progress":
+                    job_card_doc.db_set("status", "On Hold")
+
+                    if job_card_doc.time_logs:
+                        for row in job_card_doc.time_logs:
+                            if not row.to_time:
+                                row.to_time = get_current_date_time_in_timezone()
+                                row.time_in_mins = time_diff_in_seconds(row.to_time, row.from_time) / 60
+                                row.db_set('to_time', row.to_time)
+                                row.db_set('time_in_mins', row.time_in_mins)
+                    job_card_doc.save()
+                    create_job_card_automation_log(job_card_doc.name, remarks="Paused after shift end")
+
+            # Resume job card if within shift time
+            if start_shift_time <= current_time <= start_lunch_time:
+                if job_card_doc.status == "On Hold":
+                    job_card_doc.db_set("status", "Work In Progress")
+
+                    new_args = frappe._dict({
+                        "from_time": get_current_date_time_in_timezone(),
+                        "operation": job_card_doc.operation,
+                        "completed_qty": 0.0
+                    })
+                    employees = job_card_doc.get("employee") or []
+                    if employees:
+                        for name in employees:
+                            new_args.employee = name.employee
+                            job_card_doc.append("time_logs", new_args)
+                    else:
+                        job_card_doc.append("time_logs", new_args)
+                    job_card_doc.save()
+                    create_job_card_automation_log(job_card_doc.name, remarks="Resumed during shift")
+
+            # Pause job card during lunch
+            elif start_lunch_time <= current_time <= end_lunch_time:
+                if job_card_doc.status == "Work In Progress":
+                    job_card_doc.db_set("status", "On Hold")
+                    if job_card_doc.time_logs:
+                        for row in job_card_doc.time_logs:
+                            if not row.to_time:
+                                row.to_time = get_current_date_time_in_timezone()
+                                row.time_in_mins = time_diff_in_seconds(row.to_time, row.from_time) / 60
+                                row.db_set('to_time', row.to_time)
+                                row.db_set('time_in_mins', row.time_in_mins)
+                    job_card_doc.save()
+                    create_job_card_automation_log(job_card_doc.name, remarks="Paused for lunch")
+
+            # Resume job card after lunch
+            elif end_lunch_time < current_time < end_shift_time:
+                if job_card_doc.status == "On Hold":
+                    job_card_doc.db_set("status", "Work In Progress")
+                    new_args = frappe._dict({
+                        "from_time": get_current_date_time_in_timezone(),
+                        "operation": job_card_doc.operation,
+                        "completed_qty": 0.0
+                    })
+                    employees = job_card_doc.get("employee") or []
+                    if employees:
+                        for name in employees:
+                            new_args.employee = name.employee
+                            job_card_doc.append("time_logs", new_args)
+                    else:
+                        job_card_doc.append("time_logs", new_args)
+                    job_card_doc.save()
+                    create_job_card_automation_log(job_card_doc.name, remarks="Resumed after lunch")
+
+    except Exception as e:
+        create_job_card_automation_log(None, "Error processing Job cards.", str(e))
+
+
 def pause_and_resume_job_cards_based_on_shift():
     try:
         settings = frappe.get_single("Job Card Automation Settings")
@@ -78,8 +198,8 @@ def pause_and_resume_job_cards_based_on_shift():
         else:
             end_shift_time = shift.end_time
 
-        current_time_str = get_current_time_in_timezone()  
-        current_time = convert_str_to_time(current_time_str)  
+        current_time_str = get_current_time_in_timezone()
+        current_time = convert_str_to_time(current_time_str)
         today_date = now_datetime().date()
 
         holiday_list = settings.holiday_list
@@ -135,18 +255,17 @@ def pause_and_resume_job_cards():
     try:
         settings = frappe.get_single("Job Card Automation Settings")
         if not settings.enabled_lunch_time:
-            return 
+            return
         if settings.start_lunch_time and settings.end_lunch_time:
             start_lunch_time = convert_str_to_time(settings.start_lunch_time)
             end_lunch_time = convert_str_to_time(settings.end_lunch_time)
-            current_time_str = get_current_time_in_timezone()  
-            current_time = convert_str_to_time(current_time_str)  
+            current_time_str = get_current_time_in_timezone()
+            current_time = convert_str_to_time(current_time_str)
             today_date = now_datetime().date()
             holiday_list = settings.holiday_list
 
             shift = frappe.get_doc("Shift Type", settings.shift)
             end_shift_time = shift.end_time if not isinstance(shift.end_time, timedelta) else (datetime(1, 1, 1) + shift.end_time).time()
-
 
             if current_time >= end_shift_time:
                 return
@@ -176,7 +295,7 @@ def pause_and_resume_job_cards():
                         create_job_card_automation_log(job_card_doc.name, remarks="Paused for lunch")
 
                 # Resume job card after lunch
-                elif current_time > end_lunch_time and current_time < end_shift_time:
+                elif end_lunch_time < current_time < end_shift_time:
                     if job_card_doc.status == "On Hold":
                         job_card_doc.db_set("status", "Work In Progress")
 
