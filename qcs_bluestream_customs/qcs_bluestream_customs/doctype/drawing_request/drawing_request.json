@@ -1,0 +1,337 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2020-06-10 10:32:34.672219",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "sales_section_section",
+  "naming_series",
+  "date",
+  "created_by",
+  "sales_type",
+  "reference_document",
+  "customer_name",
+  "contractor_name",
+  "consultant_name",
+  "post_dr_sales",
+  "production_dr",
+  "paint",
+  "sales_column_column",
+  "required_by_date",
+  "lead",
+  "opportunity",
+  "quotation",
+  "sales_order",
+  "project_details",
+  "attach_logo",
+  "logo_for",
+  "supply",
+  "supply_and_installation",
+  "reference_image",
+  "layout_drawings",
+  "bs_proposal",
+  "as_per_drawing",
+  "play_equipments",
+  "budget_section_section",
+  "budget_table",
+  "sales_section_1_section",
+  "comments",
+  "designer_section_section",
+  "start_date",
+  "status",
+  "designer_column_column",
+  "expected_completion_date",
+  "completion_date",
+  "designer_section_1_section",
+  "designer_comments",
+  "amended_from",
+  "pmo"
+ ],
+ "fields": [
+  {
+   "fieldname": "sales_section_section",
+   "fieldtype": "Section Break",
+   "label": "Sales Section"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming_Series",
+   "options": "DDR-"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "default": "__user",
+   "fieldname": "created_by",
+   "fieldtype": "Link",
+   "label": "Created By",
+   "options": "User"
+  },
+  {
+   "fieldname": "sales_type",
+   "fieldtype": "Select",
+   "label": "Sales Type",
+   "options": "\nPre Sales\nPost Sales"
+  },
+  {
+   "depends_on": "eval:(doc.sales_type == 'Pre Sales')",
+   "fieldname": "reference_document",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Reference Document",
+   "options": "\nOpportunity\nQuotation"
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "label": "Customer Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contractor_name",
+   "fieldtype": "Data",
+   "label": "Contractor Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "consultant_name",
+   "fieldtype": "Data",
+   "label": "Consultant Name",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "post_dr_sales",
+   "fieldtype": "Check",
+   "label": "Post DR Sales"
+  },
+  {
+   "default": "0",
+   "fieldname": "production_dr",
+   "fieldtype": "Check",
+   "label": "Production DR",
+   "reqd": 1
+  },
+  {
+   "fieldname": "paint",
+   "fieldtype": "Data",
+   "label": "Paint Ral No"
+  },
+  {
+   "fieldname": "sales_column_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "required_by_date",
+   "fieldtype": "Date",
+   "label": "Required by Date"
+  },
+  {
+   "fieldname": "lead",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Lead",
+   "options": "Lead"
+  },
+  {
+   "depends_on": "eval:(doc.reference_document == 'Opportunity')",
+   "fieldname": "opportunity",
+   "fieldtype": "Link",
+   "label": "Opportunity",
+   "options": "Opportunity"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "quotation",
+   "fieldtype": "Link",
+   "label": "Quotation",
+   "options": "Quotation"
+  },
+  {
+   "depends_on": "eval:(doc.sales_type == 'Post Sales')",
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "label": "Sales Order",
+   "options": "Sales Order"
+  },
+  {
+   "fieldname": "project_details",
+   "fieldtype": "Data",
+   "label": "Project Details",
+   "reqd": 1
+  },
+  {
+   "fieldname": "attach_logo",
+   "fieldtype": "Select",
+   "label": "Attach Logo",
+   "options": "\nYes\nNo"
+  },
+  {
+   "depends_on": "eval:doc.attach_logo == 'Yes'",
+   "fieldname": "logo_for",
+   "fieldtype": "Select",
+   "label": "Logo For",
+   "options": "\nClient\nConsultant\nContractor"
+  },
+  {
+   "default": "0",
+   "fieldname": "supply",
+   "fieldtype": "Check",
+   "label": "Supply"
+  },
+  {
+   "default": "0",
+   "fieldname": "supply_and_installation",
+   "fieldtype": "Check",
+   "label": "Supply & Installation"
+  },
+  {
+   "fieldname": "reference_image",
+   "fieldtype": "Select",
+   "label": "Reference Image",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "layout_drawings",
+   "fieldtype": "Select",
+   "label": "Layout Drawings",
+   "options": "\nYes\nNo"
+  },
+  {
+   "default": "0",
+   "fieldname": "bs_proposal",
+   "fieldtype": "Check",
+   "label": "BS Proposal (Dimensions)"
+  },
+  {
+   "default": "0",
+   "fieldname": "as_per_drawing",
+   "fieldtype": "Check",
+   "label": "As per Drawing (Dimensions)"
+  },
+  {
+   "fieldname": "play_equipments",
+   "fieldtype": "Select",
+   "label": "Play Equipments",
+   "options": "\nFloor Type"
+  },
+  {
+   "fieldname": "budget_section_section",
+   "fieldtype": "Section Break",
+   "label": "Budget Section"
+  },
+  {
+   "fieldname": "budget_table",
+   "fieldtype": "Table",
+   "label": "Budget Table",
+   "options": "D Request Table"
+  },
+  {
+   "fieldname": "sales_section_1_section",
+   "fieldtype": "Section Break",
+   "label": "Sales Comments"
+  },
+  {
+   "fieldname": "comments",
+   "fieldtype": "Text Editor",
+   "label": "Comments"
+  },
+  {
+   "fieldname": "designer_section_section",
+   "fieldtype": "Section Break",
+   "label": "Drawing Section"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Pending\nIn Progress\nCompleted"
+  },
+  {
+   "fieldname": "designer_column_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "expected_completion_date",
+   "fieldtype": "Data",
+   "label": "Expected Completion Date"
+  },
+  {
+   "fieldname": "completion_date",
+   "fieldtype": "Data",
+   "label": "Completion Date"
+  },
+  {
+   "fieldname": "designer_section_1_section",
+   "fieldtype": "Section Break",
+   "label": "Drawing Incharge "
+  },
+  {
+   "fieldname": "designer_comments",
+   "fieldtype": "Text Editor",
+   "label": "Drawing Comments"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Drawing Request",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "pmo",
+   "fieldtype": "Link",
+   "label": "PMO",
+   "options": "PMO"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [
+  {
+   "custom": 1,
+   "group": "Projects",
+   "link_doctype": "Project",
+   "link_fieldname": "drawing_request_link"
+  }
+ ],
+ "modified": "2024-09-17 09:29:10.686766",
+ "modified_by": "Administrator",
+ "module": "Qcs Bluestream Customs",
+ "name": "Drawing Request",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

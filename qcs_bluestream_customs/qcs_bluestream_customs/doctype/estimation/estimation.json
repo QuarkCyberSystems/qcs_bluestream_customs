@@ -1,0 +1,230 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2020-12-01 10:58:18.546845",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "status",
+  "sales_person",
+  "sales_person_employee",
+  "employee_name",
+  "project",
+  "project_location",
+  "client",
+  "contractor",
+  "other_alternates",
+  "scope_of_work_1",
+  "scope_of_work",
+  "method_of_installation",
+  "column_break_column",
+  "date",
+  "client_type",
+  "project_drawing",
+  "consultant",
+  "priority",
+  "quotation",
+  "quotation_date",
+  "comments",
+  "amended_from",
+  "budget_section_section",
+  "budget_table",
+  "pmo"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "ERF-"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nJIH\nTender\nJIH Specified\nTender Specified\nOn Hold",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sales_person",
+   "fieldtype": "Link",
+   "label": "Sales Person",
+   "options": "Sales Person"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Data",
+   "label": "Project",
+   "reqd": 1
+  },
+  {
+   "fieldname": "project_location",
+   "fieldtype": "Long Text",
+   "label": "Project Location",
+   "reqd": 1
+  },
+  {
+   "fieldname": "client",
+   "fieldtype": "Data",
+   "label": "Client"
+  },
+  {
+   "fieldname": "contractor",
+   "fieldtype": "Data",
+   "label": "Contractor"
+  },
+  {
+   "fetch_from": "sales_person_employee.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "label": "Employee Name"
+  },
+  {
+   "fieldname": "other_alternates",
+   "fieldtype": "Select",
+   "label": "Other Alternates",
+   "options": "\nOpen"
+  },
+  {
+   "fieldname": "scope_of_work_1",
+   "fieldtype": "Select",
+   "label": "Scope of Work",
+   "options": "\nSupply Only\nSupply & Installation without Civil Work\nSupply and installation with Civil Work",
+   "reqd": 1
+  },
+  {
+   "fieldname": "scope_of_work",
+   "fieldtype": "Text Editor",
+   "hidden": 1,
+   "label": "Scope of Work"
+  },
+  {
+   "fieldname": "method_of_installation",
+   "fieldtype": "Select",
+   "label": "Method of Installation",
+   "options": "\nSupply Only\nCast in situ\nFree Standing\nSurface Installation"
+  },
+  {
+   "fieldname": "column_break_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "client_type",
+   "fieldtype": "Select",
+   "label": "Client Type",
+   "options": "\nEnd User\nExport\nContractor\nFacility Management\nTender\nConsultant"
+  },
+  {
+   "fieldname": "project_drawing",
+   "fieldtype": "Select",
+   "label": "Project Drawing",
+   "options": "\nIncluded\nNot Included"
+  },
+  {
+   "fieldname": "consultant",
+   "fieldtype": "Data",
+   "label": "Consultant"
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "label": "Priority",
+   "options": "\nLow\nHigh",
+   "reqd": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "quotation",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Quotation",
+   "options": "Quotation",
+   "search_index": 1
+  },
+  {
+   "fieldname": "quotation_date",
+   "fieldtype": "Date",
+   "label": "Quotation Date"
+  },
+  {
+   "fieldname": "comments",
+   "fieldtype": "Text Editor",
+   "label": "Comments"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Estimation",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "budget_section_section",
+   "fieldtype": "Section Break",
+   "label": "Budget Section"
+  },
+  {
+   "fieldname": "budget_table",
+   "fieldtype": "Table",
+   "label": "Budget Table",
+   "options": "D Request Table",
+   "reqd": 1
+  },
+  {
+   "fieldname": "pmo",
+   "fieldtype": "Link",
+   "label": "PMO",
+   "options": "PMO"
+  },
+  {
+   "fieldname": "sales_person_employee",
+   "fieldtype": "Link",
+   "label": "Sales Person Employee",
+   "options": "Employee"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [
+  {
+   "group": "Projects",
+   "link_doctype": "Project",
+   "link_fieldname": "estimation_link"
+  }
+ ],
+ "modified": "2024-09-21 08:51:30.700728",
+ "modified_by": "Administrator",
+ "module": "Qcs Bluestream Customs",
+ "name": "Estimation",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

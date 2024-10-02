@@ -1,1 +1,2 @@
 qcs_bluestream_customs.patches.v15_0.update_bom_transfer_material_against #01-07-2024
+qcs_bluestream_customs.patches.v15_0.copy_employee_to_sales_person

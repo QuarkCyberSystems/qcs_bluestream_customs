@@ -34,7 +34,9 @@ doctype_js = {
 	"Material Request": "public/material_request.js",
 	"Production Plan": "public/production_plan.js",
 	"Quality Inspection": "public/quality_inspection.js",
-	"Purchase Order": "public/purchase_order.js"
+	"Purchase Order": "public/purchase_order.js",
+	"Quotation": "public/quotation.js",
+	"Opportunity": "public/opportunity.js"
 }
 
 doctype_list_js = {
@@ -119,7 +121,11 @@ doc_events = {
 	},
 	"Purchase Receipt": {
 		"on_submit": "qcs_bluestream_customs.controller.purchase_controller.update_shipping_tracker"
-	}
+	},
+	# "Estimation": {
+	# 	"after_insert": "qcs_bluestream_customs.controller.estimation_controller.update_estimation_id",
+	# 	"on_submit": "qcs_bluestream_customs.controller.estimation_controller.update_quotation_status"
+	# }
 }
 
 # Scheduled Tasks
@@ -156,7 +162,7 @@ fixtures = [
 					'Work Order-status-in_list_view',
 					'Stock Entry-custom_sampling_work_order',
 					'Job Card-custom_sampling_work_order',
-					'Production Plan-transfer_materials-hidden'
+					#'Production Plan-transfer_materials-hidden'
 					'Quality Inspection-reference_type-reqd',
 					'Quality Inspection-reference_name-reqd',
 					'Quality Inspection-main-field_order',
@@ -173,8 +179,8 @@ fixtures = [
 		"dt": "Custom Field", "filters": [
 			[
 				"name", "in", [
-					'Production Plan-custom_row_materials_for_purchase',
-					'Production Plan-custom_purchase_warehouse',
+					#'Production Plan-custom_row_materials_for_purchase',
+					#'Production Plan-custom_purchase_warehouse',
 					'Pick List-custom_job_card',
 					'Pick List Item-custom_job_card_item',
 					'Material Request-custom_sales_order'

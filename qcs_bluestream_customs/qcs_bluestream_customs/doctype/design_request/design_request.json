@@ -1,0 +1,356 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2020-06-09 16:35:20.640705",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "sales_section_section",
+  "naming_series",
+  "date",
+  "created_by",
+  "reference_document",
+  "design_request_stage",
+  "production",
+  "vertical",
+  "sales_column_column",
+  "required_by_date",
+  "lead",
+  "quotation",
+  "sales_order",
+  "project_name",
+  "client",
+  "contractor",
+  "consultant",
+  "sales_person",
+  "sales_coordinator",
+  "other_information_section",
+  "design_direction",
+  "client_reference",
+  "reference_images_attached",
+  "other_column_column",
+  "primary_focus_points",
+  "site_analysis_image",
+  "expected_budget",
+  "budget_section_section",
+  "budget_table",
+  "product_specification_section",
+  "material",
+  "color_finish",
+  "column_12_column",
+  "size",
+  "other",
+  "sales_section_1_section",
+  "comments",
+  "designer_section_section",
+  "start_date",
+  "status",
+  "designer_column_column",
+  "expected_completion_date",
+  "completion_date",
+  "designer_section_1_section",
+  "designer_comments",
+  "amended_from",
+  "pmo"
+ ],
+ "fields": [
+  {
+   "fieldname": "sales_section_section",
+   "fieldtype": "Section Break",
+   "label": "Sales Section"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming_Series",
+   "options": "DDR-"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "default": "__user",
+   "fieldname": "created_by",
+   "fieldtype": "Link",
+   "label": "Created By",
+   "options": "User"
+  },
+  {
+   "fieldname": "reference_document",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Reference Document",
+   "options": "\nLead\nQuotation\nSales Order"
+  },
+  {
+   "fieldname": "design_request_stage",
+   "fieldtype": "Select",
+   "label": "Design Request Stage",
+   "options": "\nPre Sales\nPost Sales\nProduction",
+   "reqd": 1
+  },
+  {
+   "fieldname": "production",
+   "fieldtype": "Select",
+   "label": "Production",
+   "options": "Ref: Drawings\nApproved Material"
+  },
+  {
+   "fieldname": "vertical",
+   "fieldtype": "Select",
+   "label": "Vertical",
+   "options": "\nSF\nPlay Equipments\nWM"
+  },
+  {
+   "fieldname": "sales_column_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "required_by_date",
+   "fieldtype": "Date",
+   "label": "Required by Date"
+  },
+  {
+   "depends_on": "eval:(doc.reference_document == 'Lead')",
+   "fieldname": "lead",
+   "fieldtype": "Link",
+   "label": "Lead",
+   "options": "Lead"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "quotation",
+   "fieldtype": "Link",
+   "label": "Quotation",
+   "options": "Quotation"
+  },
+  {
+   "depends_on": "eval:(doc.reference_document == 'Sales Order')",
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "label": "Sales Order",
+   "options": "Sales Order"
+  },
+  {
+   "fieldname": "project_name",
+   "fieldtype": "Data",
+   "label": "Project Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "client",
+   "fieldtype": "Data",
+   "label": "Client"
+  },
+  {
+   "fieldname": "contractor",
+   "fieldtype": "Data",
+   "label": "Contractor"
+  },
+  {
+   "fieldname": "consultant",
+   "fieldtype": "Data",
+   "label": "Consultant"
+  },
+  {
+   "fieldname": "sales_person",
+   "fieldtype": "Link",
+   "label": "Sales Person",
+   "options": "User"
+  },
+  {
+   "fieldname": "sales_coordinator",
+   "fieldtype": "Select",
+   "label": "Sales Coordinator",
+   "options": "User"
+  },
+  {
+   "fieldname": "other_information_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "design_direction",
+   "fieldtype": "Small Text",
+   "label": "Design Direction",
+   "reqd": 1
+  },
+  {
+   "fieldname": "client_reference",
+   "fieldtype": "Data",
+   "label": "Client Reference "
+  },
+  {
+   "fieldname": "reference_images_attached",
+   "fieldtype": "Select",
+   "label": "Reference Images Attached",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "other_column_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "primary_focus_points",
+   "fieldtype": "Small Text",
+   "label": "Primary Focus Points",
+   "reqd": 1
+  },
+  {
+   "fieldname": "site_analysis_image",
+   "fieldtype": "Select",
+   "label": "Site Analysis Image",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "expected_budget",
+   "fieldtype": "Currency",
+   "label": "Expected Budget"
+  },
+  {
+   "fieldname": "budget_section_section",
+   "fieldtype": "Section Break",
+   "label": "Budget Section"
+  },
+  {
+   "fieldname": "budget_table",
+   "fieldtype": "Table",
+   "label": "Budget Table",
+   "options": "D Request Table"
+  },
+  {
+   "fieldname": "product_specification_section",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "Product Specification"
+  },
+  {
+   "fieldname": "material",
+   "fieldtype": "Data",
+   "label": "Material"
+  },
+  {
+   "fieldname": "color_finish",
+   "fieldtype": "Data",
+   "label": "Color Finish"
+  },
+  {
+   "fieldname": "column_12_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "size",
+   "fieldtype": "Data",
+   "label": "Size"
+  },
+  {
+   "fieldname": "other",
+   "fieldtype": "Data",
+   "label": "Other"
+  },
+  {
+   "fieldname": "sales_section_1_section",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "Sales Comments"
+  },
+  {
+   "fieldname": "comments",
+   "fieldtype": "Text Editor",
+   "label": "Comments"
+  },
+  {
+   "fieldname": "designer_section_section",
+   "fieldtype": "Section Break",
+   "label": "Designer Section"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Pending\nIn Progress\nCompleted"
+  },
+  {
+   "fieldname": "designer_column_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "expected_completion_date",
+   "fieldtype": "Data",
+   "label": "Expected Completion Date"
+  },
+  {
+   "fieldname": "completion_date",
+   "fieldtype": "Data",
+   "label": "Completion Date"
+  },
+  {
+   "fieldname": "designer_section_1_section",
+   "fieldtype": "Section Break",
+   "label": "Designer "
+  },
+  {
+   "fieldname": "designer_comments",
+   "fieldtype": "Text Editor",
+   "label": "Designer Comments"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Design Request",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "pmo",
+   "fieldtype": "Link",
+   "label": "PMO",
+   "options": "PMO"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [
+  {
+   "custom": 1,
+   "group": "Projects",
+   "link_doctype": "Project",
+   "link_fieldname": "design_request_link"
+  }
+ ],
+ "modified": "2024-09-17 09:28:55.765382",
+ "modified_by": "Administrator",
+ "module": "Qcs Bluestream Customs",
+ "name": "Design Request",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

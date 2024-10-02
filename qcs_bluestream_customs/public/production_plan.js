@@ -7,7 +7,30 @@ frappe.ui.form.on('Production Plan', {
 				},
 			};
 		});
+		// if (frm.doc.docstatus === 1) {
+		// 	if (frm.doc.po_items && frm.doc.status !== "Closed") {
+		// 		frm.add_custom_button(
+		// 			__("Work Orders / Subcontract PO"),
+		// 			() => {
+		// 				frm.trigger("make_work_orders");
+		// 			},
+		// 			__("Create")
+		// 		);
+		// 	}
+		// }
     },
+	
+	// make_work_orders(frm) {
+	// 	frappe.call({
+	// 		method: "qcs_bluestream_customs.controller.production_plan.make_work_order1",
+	// 		args:{
+	// 			"doc": frm.doc,
+	// 		},
+	// 		callback: function () {
+	// 			frm.reload_doc();
+	// 		},
+	// 	});
+	// },
 	get_items_for_mr(frm) {
 		if (!frm.doc.for_warehouse) {
 			frm.trigger("toggle_for_warehouse");
@@ -26,6 +49,21 @@ frappe.ui.form.on('Production Plan', {
 				warehouse: frm.doc.for_warehouse,
 			},
 		]);
+	},
+	transfer_materials(frm) {
+		if (!frm.doc.for_warehouse) {
+			frm.trigger("toggle_for_warehouse");
+			frappe.throw(__("Select the Warehouse"));
+		}
+
+		frm.set_value("consider_minimum_order_qty", 0);
+
+		if (frm.doc.ignore_existing_ordered_qty) {
+			frm.events.get_items_for_material_requests(frm);
+		} else {
+			let warehouses = [{"warehouse":"All Warehouses - BSE"}]
+			frm.events.get_items_for_material_requests(frm, warehouses);
+		}
 	},
     get_items_for_material_requests(frm, warehouses) {
 		frappe.call({
