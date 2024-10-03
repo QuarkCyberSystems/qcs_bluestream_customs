@@ -799,6 +799,11 @@ class ProductionPlan(Document):
 	def create_work_order(self, item):
 		from erpnext.manufacturing.doctype.work_order.work_order import OverProductionError
 
+		item_list = []
+		tab = self.mr_items
+		for i in range(0, len(tab)):
+			if tab[i].get("material_request_type") == "Purchase":
+				item_list.append({"item_code": tab[i].get("item_code"), "item_name": tab[i].get("item_code"), "description": tab[i].get("description"), "source_warehouse": tab[i].get("warehouse"), "required_qty": tab[i].get("quantity"), "include_item_in_manufacturing": 1})
 		if flt(item.get("qty")) <= 0:
 			return
 
@@ -810,8 +815,11 @@ class ProductionPlan(Document):
 			wo.fg_warehouse = item.get("warehouse")
 
 		wo.set_work_order_operations()
-		wo.set_required_items()
-
+		# wo.set_required_items()
+		frappe.errprint(item_list)
+		wo.update({
+			"required_items": item_list or ""
+		})
 		try:
 			wo.flags.ignore_mandatory = True
 			wo.flags.ignore_validate = True
@@ -1582,6 +1590,7 @@ def get_items_for_material_requests(doc, warehouses=None, get_parent_warehouse_d
 				) + flt(details.qty)
 			else:
 				so_item_details[sales_order][item_code] = details
+
 	mr_items = []
 	for sales_order in so_item_details:
 		item_dict = so_item_details[sales_order]
@@ -1602,12 +1611,13 @@ def get_items_for_material_requests(doc, warehouses=None, get_parent_warehouse_d
 				)
 				if items:
 					mr_items.append(items)
-	
-	# if (not ignore_existing_ordered_qty or get_parent_warehouse_data) and warehouses:
-	# 	new_mr_items = []
-	# 	for item in mr_items:
-	# 		get_materials_from_other_locations(item, warehouses, new_mr_items, company)
-	# 	mr_items = new_mr_items
+
+	if (not ignore_existing_ordered_qty or get_parent_warehouse_data) and warehouses:
+		new_mr_items = []
+		for item in mr_items:
+			get_materials_from_other_locations(item, warehouses, new_mr_items, company)
+
+		mr_items = new_mr_items
 
 	if not mr_items:
 		to_enable = frappe.bold(_("Ignore Existing Projected Quantity"))
@@ -1621,49 +1631,8 @@ def get_items_for_material_requests(doc, warehouses=None, get_parent_warehouse_d
 		message += _("If you still want to proceed, please enable {0}.").format(to_enable)
 
 		frappe.msgprint(message, title=_("Note"))
-  
-	final_mr_items = []
-	for i in range(0, len(mr_items)):
-		if doc.get("ignore_existing_ordered_qty") == 1 or doc.get("include_safety_stock") == 1:
-			item = mr_items[i].copy()
-			item["warehouse"] = doc.get("custom_purchase_warehouse")
-			final_mr_items.append(item)
-		else:
-			if (mr_items[i].get("material_request_type") == "Purchase"):
-				if mr_items[i].get("actual_qty") == 0:
-					item = mr_items[i].copy()
-					item["warehouse"] = doc.get("custom_purchase_warehouse")
-					final_mr_items.append(item)
-		
-				else:
-					if mr_items[i].get("actual_qty") < mr_items[i].get("required_bom_qty"):
-							qty = mr_items[i].get("required_bom_qty") - mr_items[i].get("actual_qty")
-							item = mr_items[i].copy()
-							item["material_request_type"] = "Purchase"
-							item["quantity"] = qty
-							item["warehouse"] = doc.get("custom_purchase_warehouse")
-							final_mr_items.append(item)
-					if mr_items[i].get("actual_qty") > mr_items[i].get("required_bom_qty"):
-						pass
-			else:
-				if mr_items[i].get("actual_qty") == 0:
-					item = mr_items[i].copy()
-					item["material_request_type"] = "Purchase"
-					item["warehouse"] = doc.get("custom_purchase_warehouse")
-					final_mr_items.append(item)
-				else:
-					if mr_items[i].get("actual_qty") < mr_items[i].get("required_bom_qty"):
-						qty = mr_items[i].get("required_bom_qty") - mr_items[i].get("actual_qty")
-						item = mr_items[i].copy()
-						item["material_request_type"] = "Purchase"
-						item["quantity"] = qty
-						item["warehouse"] = doc.get("custom_purchase_warehouse")
-						final_mr_items.append(item)
-					if mr_items[i].get("actual_qty") > mr_items[i].get("required_bom_qty"):
-						pass
-	return final_mr_items
 
-	# return mr_items
+	return mr_items
 
 
 def get_materials_from_other_locations(item, warehouses, new_mr_items, company):
