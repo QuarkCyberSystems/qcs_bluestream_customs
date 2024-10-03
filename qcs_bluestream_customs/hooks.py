@@ -36,6 +36,10 @@ doctype_js = {
 	"Quality Inspection": "public/quality_inspection.js",
 	"Purchase Order": "public/purchase_order.js"
 }
+#,
+#	"Quotation": "public/quotation.js",
+#	"Opportunity": "public/opportunity.js"
+#}
 
 doctype_list_js = {
 	"Job Card": "public/job_card_custom_list.js"
@@ -106,7 +110,9 @@ doctype_list_js = {
 override_doctype_class = {
 	"Stock Entry": "qcs_bluestream_customs.override.stock_entry.BSStockEntry",
 	"Job Card": "qcs_bluestream_customs.override.job_card.BSJobCard",
-	"Pick List": "qcs_bluestream_customs.override.pick_list.BSPickList"
+	"Pick List": "qcs_bluestream_customs.override.pick_list.BSPickList",
+	"Work Order": "qcs_bluestream_customs.override.work_order.BSWorkOrder",
+	"Production Plan": "qcs_bluestream_customs.override.production_plan.BSProductionPlan",
 }
 
 # Document Events
@@ -119,8 +125,13 @@ doc_events = {
 	},
 	"Purchase Receipt": {
 		"on_submit": "qcs_bluestream_customs.controller.purchase_controller.update_shipping_tracker"
-	}
+	},
 }
+# "Estimation": {
+# 	"after_insert": "qcs_bluestream_customs.controller.estimation_controller.update_estimation_id",
+# 	"on_submit": "qcs_bluestream_customs.controller.estimation_controller.update_quotation_status"
+# }
+
 
 # Scheduled Tasks
 # ---------------
@@ -156,7 +167,6 @@ fixtures = [
 					'Work Order-status-in_list_view',
 					'Stock Entry-custom_sampling_work_order',
 					'Job Card-custom_sampling_work_order',
-					'Production Plan-transfer_materials-hidden'
 					'Quality Inspection-reference_type-reqd',
 					'Quality Inspection-reference_name-reqd',
 					'Quality Inspection-main-field_order',
@@ -173,8 +183,7 @@ fixtures = [
 		"dt": "Custom Field", "filters": [
 			[
 				"name", "in", [
-					'Production Plan-custom_row_materials_for_purchase',
-					'Production Plan-custom_purchase_warehouse',
+					'Production Plan-custom_get_raw_materials',
 					'Pick List-custom_job_card',
 					'Pick List Item-custom_job_card_item',
 					'Material Request-custom_sales_order'
