@@ -32,7 +32,7 @@ from erpnext.stock.utils import get_or_make_bin
 from erpnext.utilities.transaction_base import validate_uom_is_integer
 
 
-class ProductionPlan(Document):
+class BSProductionPlan(Document):
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 
@@ -680,6 +680,7 @@ class ProductionPlan(Document):
 
 	@frappe.whitelist()
 	def make_work_order(self):
+		frappe.errprint("bhbhvhjv222222222222222222222222222222222222222")
 		from erpnext.manufacturing.doctype.work_order.work_order import get_default_warehouse
 
 		wo_list, po_list = [], []
@@ -804,6 +805,8 @@ class ProductionPlan(Document):
 		for i in range(0, len(tab)):
 			if tab[i].get("material_request_type") == "Purchase":
 				item_list.append({"item_code": tab[i].get("item_code"), "item_name": tab[i].get("item_code"), "description": tab[i].get("description"), "source_warehouse": tab[i].get("warehouse"), "required_qty": tab[i].get("quantity"), "include_item_in_manufacturing": 1})
+			if tab[i].get("material_request_type") == "Material Transfer":
+				item_list.append({"item_code": tab[i].get("item_code"), "item_name": tab[i].get("item_code"), "description": tab[i].get("description"), "source_warehouse": tab[i].get("from_warehouse"), "required_qty": tab[i].get("quantity"), "include_item_in_manufacturing": 1})
 		if flt(item.get("qty")) <= 0:
 			return
 
@@ -838,6 +841,10 @@ class ProductionPlan(Document):
 			item_doc = frappe.get_cached_doc("Item", item.item_code)
 
 			material_request_type = item.material_request_type or item_doc.default_material_request_type
+   
+			# Skip Material Transfer type requests
+			if material_request_type == "Material Transfer":
+				continue
 
 			# key for Sales Order:Material Request Type:Customer
 			key = "{}:{}:{}".format(item.sales_order, material_request_type, item_doc.customer or "")
@@ -1631,6 +1638,48 @@ def get_items_for_material_requests(doc, warehouses=None, get_parent_warehouse_d
 		message += _("If you still want to proceed, please enable {0}.").format(to_enable)
 
 		frappe.msgprint(message, title=_("Note"))
+  
+	# final_mr_items = []
+	# for i in range(0, len(mr_items)):
+	# 	if doc.get("ignore_existing_ordered_qty") == 1 or doc.get("include_safety_stock") == 1:
+	# 		item = mr_items[i].copy()
+	# 		item["warehouse"] = doc.get("custom_purchase_warehouse")
+	# 		final_mr_items.append(item)
+	# 	else:
+	# 		if (mr_items[i].get("material_request_type") == "Purchase"):
+	# 			if mr_items[i].get("actual_qty") == 0:
+	# 				item = mr_items[i].copy()
+	# 				item["warehouse"] = doc.get("custom_purchase_warehouse")
+	# 				final_mr_items.append(item)
+
+	# 			else:
+	# 				if mr_items[i].get("actual_qty") < mr_items[i].get("required_bom_qty"):
+	# 						qty = mr_items[i].get("required_bom_qty") - mr_items[i].get("actual_qty")
+	# 						item = mr_items[i].copy()
+	# 						item["material_request_type"] = "Purchase"
+	# 						item["quantity"] = qty
+	# 						item["warehouse"] = doc.get("custom_purchase_warehouse")
+	# 						final_mr_items.append(item)
+	# 				if mr_items[i].get("actual_qty") > mr_items[i].get("required_bom_qty"):
+	# 					pass
+	# 		else:
+	# 			if mr_items[i].get("actual_qty") == 0:
+	# 				item = mr_items[i].copy()
+	# 				item["material_request_type"] = "Purchase"
+	# 				item["warehouse"] = doc.get("custom_purchase_warehouse")
+	# 				final_mr_items.append(item)
+	# 			else:
+	# 				if mr_items[i].get("actual_qty") < mr_items[i].get("required_bom_qty"):
+	# 					qty = mr_items[i].get("required_bom_qty") - mr_items[i].get("actual_qty")
+	# 					item = mr_items[i].copy()
+	# 					item["material_request_type"] = "Purchase"
+	# 					item["quantity"] = qty
+	# 					item["warehouse"] = doc.get("custom_purchase_warehouse")
+	# 					final_mr_items.append(item)
+	# 				if mr_items[i].get("actual_qty") > mr_items[i].get("required_bom_qty"):
+	# 					pass
+	# return final_mr_items
+
 
 	return mr_items
 
