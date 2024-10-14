@@ -22,13 +22,19 @@ frappe.query_reports["Purchase Tracker"] = {
 			fieldtype: "Link",
 			options: "Purchase Order",
 		},
-		// {
-        //     fieldname: "status",
-        //     label: __("Status"),
-        //     fieldtype: "Select",
-        //     options: ["Draft"],
-        //     default: "Draft"
-        // }
+		{
+			fieldname: "shipping_tracker",
+			label: __("Shipping Tracker"),
+			fieldtype: "Link",
+			options: "Shipping Tracker",
+		},
+		{
+            fieldname: "status",
+            label: __("Status"),
+            fieldtype: "Select",
+            options: ["Pending", "Dispatched", "Arrived"],
+            // default: "Pending"
+        }
 		// {
 		// 	fieldname: "from_date",
 		// 	label: __("From Date"),
