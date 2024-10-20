@@ -58,6 +58,8 @@ def get_columns(filters):
 	query_filters = []
 	if filters.get("employee"):
 		query_filters.append(["employee", "=", filters.get("employee")])
+	if filters.get("sales_person"):
+		query_filters.append(["custom_sales_person", "=", filters.get("sales_person")])
 	if filters.get("quotation_to") == "Customer":
 		if filters.get("customer"):
 			query_filters.append(["party_name", "=", filters.get("customer")])
@@ -120,6 +122,8 @@ def get_data(filters):
 		query_filters = []
 		if filters.get("employee"):
 			query_filters.append(["employee", "=", filters.get("employee")])
+		if filters.get("sales_person"):
+			query_filters.append(["custom_sales_person", "=", filters.get("sales_person")])
 		if filters.get("quotation_to") == "Customer":
 			if filters.get("customer"):
 				query_filters.append(["party_name", "=", filters.get("customer")])
@@ -164,6 +168,8 @@ def get_data(filters):
 			query_filters1 = []
 			if filters.get("employee"):
 				query_filters1.append(["employee", "=", filters.get("employee")])
+			if filters.get("sales_person"):
+				query_filters.append(["custom_sales_person", "=", filters.get("sales_person")])
 			if filters.get("company"):
 				query_filters1.append(["company", "=", filters.get("company")])
 			query_filters1.append(["customer_name", "=", cus])
@@ -240,6 +246,8 @@ def get_data(filters):
 			query_filters = []
 			if filters.get("employee"):
 				query_filters.append(["employee", "=", filters.get("employee")])
+			if filters.get("sales_person"):
+				query_filters.append(["custom_sales_person", "=", filters.get("sales_person")])
 			if filters.get("quotation_to") == "Customer":
 				if filters.get("customer"):
 					query_filters.append(["party_name", "=", filters.get("customer")])
@@ -282,6 +290,8 @@ def get_data(filters):
 				query_filters1 = []
 				if filters.get("employee"):
 					query_filters1.append(["employee", "=", filters.get("employee")])
+				if filters.get("sales_person"):
+					query_filters.append(["custom_sales_person", "=", filters.get("sales_person")])
 				if filters.get("company"):
 					query_filters1.append(["company", "=", filters.get("company")])
 				query_filters1.append(["customer_name", "=", cus])
