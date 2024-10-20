@@ -58,9 +58,16 @@ frappe.query_reports["ECD Based on Customer"] = {
 		},
 		{
 			"fieldname":"employee",
-			"label": __("Sales Person"),
+			"label": __("Sales Person(Employee)"),
 			"fieldtype": "Link",
 			"options": "Employee"
+		},
+		{
+			"fieldname":"sales_person",
+			"label": __("Sales Person"),
+			"fieldtype": "Link",
+			"options": "Sales Person"
+
 		},
 		
 	],
