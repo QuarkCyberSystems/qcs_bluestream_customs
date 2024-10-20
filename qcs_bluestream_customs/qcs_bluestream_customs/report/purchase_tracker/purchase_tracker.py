@@ -138,7 +138,7 @@ def get_data(filters):
                 "material_request_no": st.material_request,
                 "purchase_order": st.purchase_order,
                 "purchase_order_date": frappe.db.get_value('Purchase Order', st.purchase_order, 'transaction_date'),
-                "shipping_tracker": st.shipping_tracker,
+                "shipping_tracker": st.parent,
                 "shipping_tracker_date": st.posting_date,
                 "supplier": st.supplier,
                 "item_code": st.item_code,
@@ -192,11 +192,11 @@ def get_st_entries(filters):
 
     query = (
         frappe.qb.from_(parent)
-        .left_join(child).on(parent.name == child.parent)
+        .join(child).on(parent.name == child.parent)
         .select(
-            parent.name.as_("shipping_tracker"),
+            child.parent,
             child.material_request,
-            child.purchase_order,
+            parent.purchase_order,
             child.purchase_order_item,
             parent.supplier,
             child.item_code,
@@ -211,15 +211,13 @@ def get_st_entries(filters):
             parent.actual_dispatch_date,
             child.actual_arrival_date
         )
-        .groupby(parent.name, child.purchase_order_item)
+       
     )
 
     if filters.get("purchase_order"):
         query = query.where(child.purchase_order == filters.get("purchase_order"))
-    
     if filters.get("shipping_tracker"):
         query = query.where(parent.name == filters.get("shipping_tracker"))
-    
     if filters.get("status"):
         query = query.where(parent.status == filters.get("status"))
 
