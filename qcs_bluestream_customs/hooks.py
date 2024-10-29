@@ -34,12 +34,11 @@ doctype_js = {
 	"Material Request": "public/material_request.js",
 	"Production Plan": "public/production_plan.js",
 	"Quality Inspection": "public/quality_inspection.js",
-	"Purchase Order": "public/purchase_order.js"
+	"Purchase Order": "public/purchase_order.js",
+	"Quotation": "public/quotation.js",
+	"Opportunity": "public/opportunity.js"
 }
-#,
-#	"Quotation": "public/quotation.js",
-#	"Opportunity": "public/opportunity.js"
-#}
+
 
 doctype_list_js = {
 	"Job Card": "public/job_card_custom_list.js"
