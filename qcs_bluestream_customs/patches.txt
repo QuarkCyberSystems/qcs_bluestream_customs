@@ -2,3 +2,4 @@ qcs_bluestream_customs.patches.v15_0.update_bom_transfer_material_against #01-07
 qcs_bluestream_customs.patches.v15_0.update_items_in_shipping_tracker
 qcs_bluestream_customs.patches.v15_0.copy_employee_to_sales_person
 qcs_bluestream_customs.patches.v15_0.update_arrival_date_in_shipping_tracker
+qcs_bluestream_customs.patches.v15_0.copy_sales_employee
