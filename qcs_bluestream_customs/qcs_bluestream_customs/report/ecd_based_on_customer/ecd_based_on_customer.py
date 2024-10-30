@@ -56,8 +56,8 @@ def get_columns(filters):
 	# 	})
  
 	query_filters = []
-	if filters.get("employee"):
-		query_filters.append(["employee", "=", filters.get("employee")])
+	# if filters.get("employee"):
+	# 	query_filters.append(["employee", "=", filters.get("employee")])
 	if filters.get("sales_person"):
 		query_filters.append(["custom_sales_person", "=", filters.get("sales_person")])
 	if filters.get("quotation_to") == "Customer":
@@ -120,8 +120,8 @@ def get_data(filters):
  
 	if(filters.get("status")):
 		query_filters = []
-		if filters.get("employee"):
-			query_filters.append(["employee", "=", filters.get("employee")])
+		# if filters.get("employee"):
+		# 	query_filters.append(["employee", "=", filters.get("employee")])
 		if filters.get("sales_person"):
 			query_filters.append(["custom_sales_person", "=", filters.get("sales_person")])
 		if filters.get("quotation_to") == "Customer":
@@ -166,8 +166,8 @@ def get_data(filters):
 			total_mo = []
 	
 			query_filters1 = []
-			if filters.get("employee"):
-				query_filters1.append(["employee", "=", filters.get("employee")])
+			# if filters.get("employee"):
+			# 	query_filters1.append(["employee", "=", filters.get("employee")])
 			if filters.get("sales_person"):
 				query_filters.append(["custom_sales_person", "=", filters.get("sales_person")])
 			if filters.get("company"):
@@ -244,8 +244,8 @@ def get_data(filters):
 		overall_total_mo1 = []
 		for s_status in set_sastus:
 			query_filters = []
-			if filters.get("employee"):
-				query_filters.append(["employee", "=", filters.get("employee")])
+			# if filters.get("employee"):
+			# 	query_filters.append(["employee", "=", filters.get("employee")])
 			if filters.get("sales_person"):
 				query_filters.append(["custom_sales_person", "=", filters.get("sales_person")])
 			if filters.get("quotation_to") == "Customer":
@@ -288,8 +288,8 @@ def get_data(filters):
 				total_mo = []
 		
 				query_filters1 = []
-				if filters.get("employee"):
-					query_filters1.append(["employee", "=", filters.get("employee")])
+				# if filters.get("employee"):
+				# 	query_filters1.append(["employee", "=", filters.get("employee")])
 				if filters.get("sales_person"):
 					query_filters.append(["custom_sales_person", "=", filters.get("sales_person")])
 				if filters.get("company"):
