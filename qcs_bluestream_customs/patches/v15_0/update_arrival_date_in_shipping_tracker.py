@@ -17,7 +17,10 @@ def execute():
             )
 
             for receipt_item in purchase_receipt_items:
-                purchase_receipt_doc = frappe.get_doc("Purchase Receipt", receipt_item.parent)
+                purchase_receipt_doc = frappe.get_doc(
+                    "Purchase Receipt",
+                    receipt_item.parent
+                )
 
                 if purchase_receipt_doc.posting_date:
                     frappe.db.set_value(
