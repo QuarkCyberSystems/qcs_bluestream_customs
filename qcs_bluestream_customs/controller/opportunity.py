@@ -13,12 +13,12 @@ def create_estimation(source_name, target_doc=None):
                 "field_map": {
                     "name": "custom_opportunity",
                     "status": "status",
-                    "custom_sales_person_user": "sales_person",
-                    # "custom_sales_person_employee": "sales_person_employee",
-                    # "custom_employee_name": "employee_name",
+                    "custom_sales_person_user": "sales_person_custom",
                     "custom_scope_of_work": "scope_of_work_1",
-                    # "custom_priority": "priority",
-                    "rfq_no_project_name": "project",
+                    "custom_project": "custom_project_id",
+                    "custom_project_name": "custom_project_name",
+                    "custom_parent_project": "custom_parent_project",
+                    "custom_parent_project_name": "custom_parent_project_name",
                     "custom_date_of_enquiry": "custom_date_of_enquiry"
                 },
                 # "validation": {"docstatus": ["=", 1]},
