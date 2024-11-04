@@ -2,9 +2,10 @@
 # For license information, please see license.txt
 
 import frappe
+import datetime
+
 from frappe.model.document import Document
 from frappe.utils import add_days, getdate, today
-import datetime  
 
 
 class Estimation(Document):
@@ -12,11 +13,11 @@ class Estimation(Document):
         estimation_id = self.name
         quotation_id = self.quotation
         frappe.db.set_value('Quotation', quotation_id, 'estimation', estimation_id)
-        
+
     def on_submit(self):
         estimation_id = self.name
         quotation_id = self.quotation
-        opportunity_id = self.custom_opportunity
+        opportunity_id = self.opportunity
         frappe.db.set_value('Quotation', quotation_id, 'quotation_status', 'Estimation Completed')
         frappe.db.set_value('Opportunity', opportunity_id, 'custom_estimation', estimation_id)
 
