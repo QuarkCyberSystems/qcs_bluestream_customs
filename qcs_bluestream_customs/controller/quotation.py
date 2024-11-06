@@ -14,13 +14,13 @@ def create_estimation(source_name, target_doc=None):
 					"employee": "sales_person_employee",
 					"employee_name": "employee_name",
                     "transaction_date": "quotation_date",
-                    "custom_sales_person": "sales_person",
+                    "custom_sales_person": "sales_person_custom",
                     "scope_of_work": "scope_of_work_1",
                     "contractor" :"contractor",
                     "priority" :"priority",
                     "client" :"client",
                     "rfq_no_project_name" :"project",
-                    "custom_date_of_enquiry" :"custom_date_of_enquiry",
+                    "custom_date_of_enquiry" :"date_of_enquiry",
                     "jih__tender" :"status"                    
                   
                 },
