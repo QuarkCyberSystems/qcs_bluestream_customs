@@ -1683,8 +1683,19 @@ class BSStockEntry(StockController):
 				)
 
 	@frappe.whitelist()
-	def get_items(self):
+	def get_items(self, qty=None, production_item=None):
 		self.set("items", [])
+		# honor passed parameters so external callers can request a specific qty / production item
+		if qty:
+			# ensure numeric
+			self.fg_completed_qty = flt(qty)
+
+		if production_item and not self.work_order:
+			# try to set bom_no when a production_item is provided and no work_order is set
+			bom = frappe.db.get_value("BOM", {"item": production_item, "is_active": 1}, "name")
+			if bom:
+				self.bom_no = bom
+
 		self.validate_work_order()
 
 		if not self.posting_date or not self.posting_time:
@@ -1937,6 +1948,7 @@ class BSStockEntry(StockController):
 				)
 
 			item.from_warehouse = self.from_warehouse or item.source_warehouse or item.default_warehouse
+
 			if item.item_code in used_alternative_items:
 				alternative_item_data = used_alternative_items.get(item.item_code)
 				item.item_code = alternative_item_data.item_code
@@ -1953,7 +1965,7 @@ class BSStockEntry(StockController):
 
 		if (
 			frappe.db.get_single_value(
-				"Manufacturing Settings", "set_op_cost_and_scrape_from_sub_assemblies"
+				"Manufacturing Settings", "set_op_cost_and_scrap_from_sub_assemblies"
 			)
 			and self.work_order
 			and frappe.get_cached_value("Work Order", self.work_order, "use_multi_level_bom")
@@ -2739,7 +2751,7 @@ def get_operating_cost_per_unit(work_order=None, bom_no=None):
 		if (
 			bom_no
 			and frappe.db.get_single_value(
-				"Manufacturing Settings", "set_op_cost_and_scrape_from_sub_assemblies"
+				"Manufacturing Settings", "set_op_cost_and_scrap_from_sub_assemblies"
 			)
 			and frappe.get_cached_value("Work Order", work_order, "use_multi_level_bom")
 		):
@@ -2798,7 +2810,7 @@ def get_used_alternative_items(
 		from
 			`tabStock Entry` ste, `tabStock Entry Detail` sted
 		where
-			sted.parent = ste.name and ste.docstatus = 1 and sted.original_item !=  sted.item_code
+			sted.parent = ste.name and se.docstatus = 1 and sted.original_item !=  sted.item_code
 			{0} """.format(
 			cond
 		),
